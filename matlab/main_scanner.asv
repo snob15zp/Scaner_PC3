@@ -11,10 +11,7 @@ function [ Out ,FftS] = main_scanner(Signal ) % scanner function
             disp([i]);              % subtracted tone counter
             [ F ] = tone_graph(FftS ); % plotting function
         end
-        size(SGD.F)
-if (i<= size(SGD.F))
 df=f-SGD.F(i)
-end
         foldername=SGD.folder;
         fn3='signal';
         fn3a = sprintf('%i',int32(i));
@@ -33,19 +30,19 @@ end
         %coder.varsize('ActVal1',[qblobs,DmaxSize]);
         %ActVal1(1:qblobs,:)=ActVal(1:qblobs,:);
         if coder.target('MATLAB')
-            filesave_ceval(coder.ignoreSize(FftS),foldername,coder.ignoreSize(fn3f),size(FftS),0);
+            filesave_ceval(coder.ignoreSize(Signal),foldername,coder.ignoreSize(fn3f),size(FftS),0);
         else
-            filesave_ceval(coder.ignoreSize(FftS),foldername,coder.ignoreSize(fn3f),size(FftS),1);
+            filesave_ceval(coder.ignoreSize(Signal),foldername,coder.ignoreSize(fn3f),size(FftS),1);
         end
  
         fn3='FftS_I';
         fn3a = sprintf('%i',int32(i));
         fn3f = [fn3,fn3a,'.txt',0];
-        FftS_I=FftS(round(SGD.Freq_low*SGD.Fd/SGD.FftL):round(SGD.Freq_hi*SGD.Fd/SGD.FftL));
+        FftS_I=FftS(round(SGD.Freq_low*SGD.Fd/SGD.FftL),round(SGD.Freq_hi*SGD.Fd/SGD.FftL));
         if coder.target('MATLAB')
-            filesave_ceval(coder.ignoreSize(FftS_I),foldername,coder.ignoreSize(fn3f),size(FftS_I),0);
+            filesave_ceval(coder.ignoreSize(Signal),foldername,coder.ignoreSize(fn3f),size(FftS_I),0);
         else
-            filesave_ceval(coder.ignoreSize(FftS_I),foldername,coder.ignoreSize(fn3f),size(FftS_I),1);
+            filesave_ceval(coder.ignoreSize(Signal),foldername,coder.ignoreSize(fn3f),size(FftS_I),1);
         end
 
         
