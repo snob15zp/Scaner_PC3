@@ -21,7 +21,7 @@ function [ Signal, FftS, Am, a, f, p ] = tone_search( SGD, T, Signal, a, f, p ) 
             vL=vX;
         else
             fR=fX;
-            vR=vX;;
+            vR=vX;
         end
     end                             % end of approximation in frequency
     f=(fR+fL)/2;
@@ -38,7 +38,7 @@ function [ Signal, FftS, Am, a, f, p ] = tone_search( SGD, T, Signal, a, f, p ) 
        cs ss];                      % assigning sums to matrix A
     B=[yc; ys;];                    % assign sums to matrix B
     X=A\B;                          % solution vector
-    an=(mean(FftS(1:round(SGD.Freq_low*SGD.Fd/SGD.FftL)))+mean(FftS(round(SGD.Freq_hi*SGD.Fd/SGD.FftL):round(SGD.Ffts/2)-1)))/2; % average noise amplitude
+    an=(mean(FftS(1:round(SGD.Freq_low/SGD.Fd*SGD.FftL)))+mean(FftS(round(SGD.Freq_hi/SGD.Fd*SGD.FftL):round(SGD.Ffts/2)-1)))/2; % average noise amplitude
     a=sqrt(X(1)^2+X(2)^2-an^2);       % subtraction signal amplitude
     p=90*(2-sign(X(1)))-acotd(X(1)/X(2)); % subtraction signal phase 0...360
 end

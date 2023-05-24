@@ -2,7 +2,7 @@ function [ Out ,FftS] = main_scanner(Signal ) % scanner function
     [SGD,T] = globalconst();
     Am=1;a=0;f=0;p=0;i=0;           % initial assignments to enter the search and subtract tone loop
     Out=zeros(3,100);
-    %FftS=zeros(1,SGD.FftL);
+    FftS=zeros(1,SGD.FftL);
         %% The main cycle of searching and subtracting the tone of maximum amplitude
     while Am>SGD.a_err              % if the amplitude of the subtraction is greater than the specified threshold , then we look for and subtract the next tone
         [ Signal, FftS, Am, a, f, p ] = tone_search( SGD, T, Signal, a, f, p ); % tone search and subtraction function
@@ -11,10 +11,12 @@ function [ Out ,FftS] = main_scanner(Signal ) % scanner function
             disp([i]);              % subtracted tone counter
             [ F ] = tone_graph(FftS ); % plotting function
         end
-        size(SGD.F)
-if (i<= size(SGD.F))
-df=f-SGD.F(i)
-end
+        if coder.target('MATLAB')
+            %size(SGD.F)
+            if (i<= size(SGD.F))
+            df=f-SGD.F(i)
+            end
+        end
         foldername=SGD.folder;
         fn3='signal';
         fn3a = sprintf('%i',int32(i));
@@ -41,7 +43,9 @@ end
         fn3='FftS_I';
         fn3a = sprintf('%i',int32(i));
         fn3f = [fn3,fn3a,'.txt',0];
-        FftS_I=FftS(round(SGD.Freq_low*SGD.Fd/SGD.FftL):round(SGD.Freq_hi*SGD.Fd/SGD.FftL));
+        l=round(SGD.Freq_low/SGD.Fd*SGD.FftL);
+        h=round(SGD.Freq_hi/SGD.Fd*SGD.FftL);
+        FftS_I=SGD.FftL/SGD.Ffts*FftS(l:h);
         if coder.target('MATLAB')
             filesave_ceval(coder.ignoreSize(FftS_I),foldername,coder.ignoreSize(fn3f),size(FftS_I),0);
         else

@@ -27,8 +27,8 @@ else
   end
 %   ActVal2=[];
 %   ActVal2(1:s1i,1:s2i)=data(1:s1i,1:s2i);
-  coder.ceval('filesave', coder.ref(data),s1i,s2i,coder.ref(cpath),[filename,0],cast(t,"int32"));
-  coder.ceval('filecomp', coder.ref(cpath),[filename,0]);
+ % coder.ceval('filesave', coder.ref(data),s1i,s2i,coder.ref(cpath),[filename,0],cast(t,"int32"));
+ % coder.ceval('filecomp', coder.ref(cpath),[filename,0]);
 
 end
 end
