@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C\filesave.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\cosd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\fft.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\FFTImplementationCallback.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\filesave_ceval.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\main_scanner.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\main_scanner_data.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\main_scanner_emxAPI.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\main_scanner_emxutil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\main_scanner_initialize.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\main_scanner_rtwutil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\main_scanner_terminate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\mean.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\rt_nonfinite.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\rtGetInf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\rtGetNaN.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\sind.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\sprintf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="matlab\tone_search.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C\globalconst.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C\filesave.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\cosd.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\fft.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\FFTImplementationCallback.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\filesave.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\filesave_ceval.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\main_scanner.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\main_scanner_data.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\main_scanner_emxAPI.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\main_scanner_emxutil.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\main_scanner_initialize.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\main_scanner_rtwutil.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\main_scanner_terminate.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\main_scanner_types.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\mean.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\rt_nonfinite.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\rtGetInf.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\rtGetNaN.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\rtwtypes.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\sind.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\sprintf.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="matlab\tone_search.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C\globalconst.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
