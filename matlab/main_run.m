@@ -4,7 +4,7 @@ close all;
 % cd ..\txt\
  dir
  
-    %% Parameters 
+    %% Parameters scaner
 [SGD,~] = globalconst();
                     % array of timings
 %[ An ] = tone_gener();       % input matrix generation
