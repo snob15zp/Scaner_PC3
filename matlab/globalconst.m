@@ -1,7 +1,7 @@
 function [SGD,T] = globalconst()
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-SGD.Tm=1;                           % duration of the measured signal seconds
+SGD.Tm=0.66;                           % duration of the measured signal seconds
 SGD.Fd=2500000;% sampling frequency Hertz
 SGD.Ffts=round(SGD.Fd*SGD.Tm); %sample number
 SGD.mz=4;                          % zero padding multiplier - limited by the speed of the customer's computer
