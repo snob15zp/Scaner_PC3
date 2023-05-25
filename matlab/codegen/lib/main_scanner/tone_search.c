@@ -2,14 +2,13 @@
  * File: tone_search.c
  *
  * MATLAB Coder version            : 5.3
- * C/C++ source code generated on  : 24-May-2023 23:19:00
+ * C/C++ source code generated on  : 25-May-2023 14:13:44
  */
 
 /* Include Files */
 #include "tone_search.h"
 #include "cosd.h"
 #include "fft.h"
-#include "main_scanner_rtwutil.h"
 #include "rt_nonfinite.h"
 #include "sind.h"
 #include "rt_nonfinite.h"
@@ -45,8 +44,7 @@ static double rt_hypotd_snf(double u0, double u1)
 /*
  * search and delete tones function
  *
- * Arguments    : const double T[1650001]
- *                double Signal[1650001]
+ * Arguments    : double Signal[1650001]
  *                double *a
  *                double *f
  *                double *p
@@ -54,18 +52,18 @@ static double rt_hypotd_snf(double u0, double u1)
  *                double *Am
  * Return Type  : void
  */
-void tone_search(const double T[1650001], double Signal[1650001], double *a,
-                 double *f, double *p, double FftS[6600000], double *Am)
+void tone_search(double Signal[1650001], double *a, double *f, double *p,
+                 double FftS[6600000], double *Am)
 {
   static creal_T x[6600000];
   double A[4];
   double B[2];
   double a_tmp;
-  double absx;
   double cc;
   double d;
   double fL;
   double fR;
+  double sc;
   double ss;
   double vL;
   double vR;
@@ -73,55 +71,13 @@ void tone_search(const double T[1650001], double Signal[1650001], double *a,
   int k;
   int r1;
   int r2;
-  signed char n;
   boolean_T exitg1;
-  *f *= 360.0;
-  for (k = 0; k < 1650001; k++) {
-    d = *f * T[k] + *p;
-    if (rtIsInf(d) || rtIsNaN(d)) {
-      d = rtNaN;
-    } else {
-      vR = rt_remd_snf(d, 360.0);
-      absx = fabs(vR);
-      if (absx > 180.0) {
-        if (vR > 0.0) {
-          vR -= 360.0;
-        } else {
-          vR += 360.0;
-        }
-        absx = fabs(vR);
-      }
-      if (absx <= 45.0) {
-        vR *= 0.017453292519943295;
-        n = 0;
-      } else if (absx <= 135.0) {
-        if (vR > 0.0) {
-          vR = 0.017453292519943295 * (vR - 90.0);
-          n = 1;
-        } else {
-          vR = 0.017453292519943295 * (vR + 90.0);
-          n = -1;
-        }
-      } else if (vR > 0.0) {
-        vR = 0.017453292519943295 * (vR - 180.0);
-        n = 2;
-      } else {
-        vR = 0.017453292519943295 * (vR + 180.0);
-        n = -2;
-      }
-      if (n == 0) {
-        d = sin(vR);
-      } else if (n == 1) {
-        d = cos(vR);
-      } else if (n == -1) {
-        d = -cos(vR);
-      } else {
-        d = -sin(vR);
-      }
-    }
-    Signal[k] -= *a * d;
+  for (r1 = 0; r1 < 1650001; r1++) {
+    /* Signal=Signal-a*sind((f*360).*T+p); % calculate the difference signal */
+    d = *f * 360.0 * (((double)r1 + 1.0) - 1.0) / 2.5E+6 + *p;
+    b_sind(&d);
+    Signal[r1] -= *a * d;
   }
-  /*  calculate the difference signal */
   /*         %% Spectral representation of the input signal */
   fft(Signal, x);
   /*  signal Fourier transform amplitude */
@@ -168,7 +124,7 @@ void tone_search(const double T[1650001], double Signal[1650001], double *a,
   /*  step and error optimized for speed, deviation ff reset */
   fL = *f - 0.37878787878787878;
   fR = *f + 0.37878787878787878;
-  absx = 0.0;
+  sc = 0.0;
   ss = 0.0;
   /*  initial assignments to amounts */
   for (r1 = 0; r1 < 1650001; r1++) {
@@ -176,15 +132,15 @@ void tone_search(const double T[1650001], double Signal[1650001], double *a,
     d = (*f - 0.37878787878787878) * 360.0 * (double)r1 / 2.5E+6;
     a_tmp = d;
     b_cosd(&a_tmp);
-    absx += Signal[r1] * a_tmp;
+    sc += Signal[r1] * a_tmp;
     /*  the first sum of the vector */
     b_sind(&d);
     ss += Signal[r1] * d;
     /*  second vector sum */
   }
-  vL = absx * absx + ss * ss;
+  vL = sc * sc + ss * ss;
   /*  variance function - sum of squares of vector sums */
-  absx = 0.0;
+  sc = 0.0;
   ss = 0.0;
   /*  initial assignments to amounts */
   for (r1 = 0; r1 < 1650001; r1++) {
@@ -192,18 +148,18 @@ void tone_search(const double T[1650001], double Signal[1650001], double *a,
     d = (*f + 0.37878787878787878) * 360.0 * (double)r1 / 2.5E+6;
     a_tmp = d;
     b_cosd(&a_tmp);
-    absx += Signal[r1] * a_tmp;
+    sc += Signal[r1] * a_tmp;
     /*  the first sum of the vector */
     b_sind(&d);
     ss += Signal[r1] * d;
     /*  second vector sum */
   }
-  vR = absx * absx + ss * ss;
+  vR = sc * sc + ss * ss;
   /*  variance function - sum of squares of vector sums */
   while (fabs(fR - fL) > 1.0E-7) {
     /*  if the step did not reach the optimal error, then */
     cc = (fR + fL) / 2.0;
-    absx = 0.0;
+    sc = 0.0;
     ss = 0.0;
     /*  initial assignments to amounts */
     for (r1 = 0; r1 < 1650001; r1++) {
@@ -211,21 +167,21 @@ void tone_search(const double T[1650001], double Signal[1650001], double *a,
       d = cc * 360.0 * (double)r1 / 2.5E+6;
       a_tmp = d;
       b_cosd(&a_tmp);
-      absx += Signal[r1] * a_tmp;
+      sc += Signal[r1] * a_tmp;
       /*  the first sum of the vector */
       b_sind(&d);
       ss += Signal[r1] * d;
       /*  second vector sum */
     }
-    absx = absx * absx + ss * ss;
+    sc = sc * sc + ss * ss;
     /*  variance function - sum of squares of vector sums */
     if (vL < vR) {
       /*  if the maximum value is skipped, then */
       fL = cc;
-      vL = absx;
+      vL = sc;
     } else {
       fR = cc;
-      vR = absx;
+      vR = sc;
     }
   }
   /*  end of approximation in frequency */
@@ -244,17 +200,17 @@ void tone_search(const double T[1650001], double Signal[1650001], double *a,
     b_sind(&d);
     vR += d / 2.0;
     /*  simplification cos(x)*sin(x)=sin(2*x)/2 */
-    absx = *f * 360.0 * (double)r1 / 2.5E+6;
-    a_tmp = absx;
+    sc = *f * 360.0 * (double)r1 / 2.5E+6;
+    a_tmp = sc;
     b_cosd(&a_tmp);
     cc += a_tmp * a_tmp;
     /*  time starts from zero, */
-    b_sind(&absx);
-    ss += absx * absx;
+    b_sind(&sc);
+    ss += sc * sc;
     /*  and the index starts from one */
     fL += Signal[r1] * a_tmp;
     /*  so in sines and cosines is i */
-    fR += Signal[r1] * absx;
+    fR += Signal[r1] * sc;
     /*  and the signal contains the index i + 1 */
   }
   /*  end of accumulation of sums for the matrix */
@@ -274,58 +230,58 @@ void tone_search(const double T[1650001], double Signal[1650001], double *a,
     r1 = 0;
     r2 = 1;
   }
-  absx = A[r2] / A[r1];
-  vR = A[r1 + 2];
-  fL = (B[r2] - B[r1] * absx) / (A[r2 + 2] - absx * vR);
-  cc = (B[r1] - fL * vR) / A[r1];
+  sc = A[r2] / A[r1];
+  a_tmp = A[r1 + 2];
+  fL = (B[r2] - B[r1] * sc) / (A[r2 + 2] - sc * a_tmp);
+  cc = (B[r1] - fL * a_tmp) / A[r1];
   /*  solution vector */
-  vR = FftS[0];
+  a_tmp = FftS[0];
   for (k = 0; k < 1023; k++) {
-    vR += FftS[k + 1];
+    a_tmp += FftS[k + 1];
   }
   for (ib = 0; ib < 773; ib++) {
     r1 = (ib + 1) << 10;
-    absx = FftS[r1];
+    sc = FftS[r1];
     if (ib + 2 == 774) {
       r2 = 422;
     } else {
       r2 = 1024;
     }
     for (k = 2; k <= r2; k++) {
-      absx += FftS[(r1 + k) - 1];
+      sc += FftS[(r1 + k) - 1];
     }
-    vR += absx;
+    a_tmp += sc;
   }
-  a_tmp = FftS[792131];
+  vR = FftS[792131];
   for (k = 0; k < 1023; k++) {
-    a_tmp += FftS[k + 792132];
+    vR += FftS[k + 792132];
   }
   for (ib = 0; ib < 32; ib++) {
     r1 = ((ib + 1) << 10) + 792130;
-    absx = FftS[r1 + 1];
+    sc = FftS[r1 + 1];
     if (ib + 2 == 33) {
       r2 = 100;
     } else {
       r2 = 1024;
     }
     for (k = 2; k <= r2; k++) {
-      absx += FftS[r1 + k];
+      sc += FftS[r1 + k];
     }
-    a_tmp += absx;
+    vR += sc;
   }
-  *a = (vR / 791974.0 + a_tmp / 32868.0) / 2.0;
+  *a = (a_tmp / 791974.0 + vR / 32868.0) / 2.0;
   /*  average noise amplitude */
   *a = sqrt((cc * cc + fL * fL) - *a * *a);
   /*  subtraction signal amplitude */
-  vR = cc;
+  sc = cc;
   if (cc < 0.0) {
-    vR = -1.0;
+    sc = -1.0;
   } else if (cc > 0.0) {
-    vR = 1.0;
+    sc = 1.0;
   } else if (cc == 0.0) {
-    vR = 0.0;
+    sc = 0.0;
   }
-  *p = 90.0 * (2.0 - vR) - 57.295779513082323 * atan(1.0 / (cc / fL));
+  *p = 90.0 * (2.0 - sc) - 57.295779513082323 * atan(1.0 / (cc / fL));
   /*  subtraction signal phase 0...360 */
 }
 

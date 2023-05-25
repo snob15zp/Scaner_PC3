@@ -8,7 +8,7 @@ function [ An ] = tone_gener( )   % signal generation function from different to
         %% Generation of working arrays (input signal)
     Signal=SGD.An*randn(1,SGD.Ffts+1);   % random noise array with length equal to time array
     for i=1:length(SGD.F)
-        for i1=1:length(Signal)
+        for i1=1:SGD.Ffts+1
         Signal(i1)=Signal(i1)+SGD.A(i)*sind((SGD.F(i)*360)*i1/SGD.Fd+SGD.P(i)); % signal array accumulation
         end
     end

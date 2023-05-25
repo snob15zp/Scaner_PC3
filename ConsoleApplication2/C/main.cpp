@@ -5,16 +5,13 @@
 #include <vector>
 
 //matlab main begin
-
+extern "C" {
 /* Include Files */
-//#include "main.h"
-#include "rtwtypes.h"
-#include <stddef.h>
-#include <stdlib.h>
+// #include "main.h"
 #include "main_scanner.h"
 #include "main_scanner_terminate.h"
 #include "rt_nonfinite.h"
-
+}
 /* Function Declarations */
 static void argInit_1x1650001_real_T(double result[1650001]);
 
@@ -51,22 +48,24 @@ static double argInit_real_T(void)
  * Arguments    : void
  * Return Type  : void
  */
-  static double FftS[6600000];
-  static double dv[1650001];
-  double Out[300];
-  
-void main_main_scanner(void)
-{
 
+static double FftS[6600000];
+static double dv[1650001];
+double Out[300];
+
+static void main_main_scanner(void)
+{
+  //static double FftS[6600000];
+  //static double dv[1650001];
+  //double Out[300];
   /* Initialize function 'main_scanner' input arguments. */
   /* Initialize function input argument 'Signal'. */
   /* Call the entry-point 'main_scanner'. */
   //argInit_1x1650001_real_T(dv);
   main_scanner(dv, Out, FftS);
 }
-
-//matlab main end
-
+//matlab end
+// 
 //#define D_Fd 2500000
 
 int main(int argc, char **argv)
@@ -88,7 +87,7 @@ int main(int argc, char **argv)
 
 //  std::fill_n(T, 2500001, 1 / Fd);
 
-  std::fstream signalData("Signal.txt", std::ios_base::in);
+  std::fstream signalData("..\\txt\\Signal.txt", std::ios_base::in);
 
   std::cout << "Read data from file" << std::endl;
   int idx = 0;

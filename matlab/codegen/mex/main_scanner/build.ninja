@@ -49,12 +49,12 @@ build $builddir/_coder_main_scanner_api.o : cc $root/interface/_coder_main_scann
 build $builddir/_coder_main_scanner_mex.o : cc $root/interface/_coder_main_scanner_mex.c
 build $builddir/AmpPhase.o : cc $root/AmpPhase.c
 build $builddir/sumMatrixIncludeNaN.o : cc $root/sumMatrixIncludeNaN.c
+build $builddir/sind.o : cc $root/sind.c
 build $builddir/tone_search.o : cc $root/tone_search.c
 build $builddir/cosd.o : cc $root/cosd.c
-build $builddir/sind.o : cc $root/sind.c
 build $builddir/main_scanner_emxutil.o : cc $root/main_scanner_emxutil.c
 build $builddir/_coder_main_scanner_info.o : cc $root/interface/_coder_main_scanner_info.c
 build $builddir/c_mexapi_version.o : cc $matlabdir/extern/version/c_mexapi_version.c
 
 # Link
-build $root\main_scanner_mex.mexw64 : linkxx $builddir/filesave.o $builddir/main_scanner_data.o $builddir/rt_nonfinite.o $builddir/main_scanner_initialize.o $builddir/main_scanner_terminate.o $builddir/main_scanner.o $builddir/warning.o $builddir/sprintf.o $builddir/filesave_ceval.o $builddir/_coder_main_scanner_api.o $builddir/_coder_main_scanner_mex.o $builddir/AmpPhase.o $builddir/sumMatrixIncludeNaN.o $builddir/tone_search.o $builddir/cosd.o $builddir/sind.o $builddir/main_scanner_emxutil.o $builddir/_coder_main_scanner_info.o $builddir/c_mexapi_version.o 
+build $root\main_scanner_mex.mexw64 : linkxx $builddir/filesave.o $builddir/main_scanner_data.o $builddir/rt_nonfinite.o $builddir/main_scanner_initialize.o $builddir/main_scanner_terminate.o $builddir/main_scanner.o $builddir/warning.o $builddir/sprintf.o $builddir/filesave_ceval.o $builddir/_coder_main_scanner_api.o $builddir/_coder_main_scanner_mex.o $builddir/AmpPhase.o $builddir/sumMatrixIncludeNaN.o $builddir/sind.o $builddir/tone_search.o $builddir/cosd.o $builddir/main_scanner_emxutil.o $builddir/_coder_main_scanner_info.o $builddir/c_mexapi_version.o 

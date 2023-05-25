@@ -20,7 +20,7 @@
 
 /* Variable Definitions */
 static emlrtRSInfo h_emlrtRSI = {
-    4,             /* lineNo */
+    7,             /* lineNo */
     "tone_search", /* fcnName */
     "D:\\user\\DropBox_Nsel\\ZERDLab "
     "Dropbox\\Nsel\\GIT\\Scanner\\Scaner_PC3\\matlab\\tone_search.m" /* pathName
@@ -28,7 +28,7 @@ static emlrtRSInfo h_emlrtRSI = {
 };
 
 static emlrtRSInfo i_emlrtRSI = {
-    13,            /* lineNo */
+    16,            /* lineNo */
     "tone_search", /* fcnName */
     "D:\\user\\DropBox_Nsel\\ZERDLab "
     "Dropbox\\Nsel\\GIT\\Scanner\\Scaner_PC3\\matlab\\tone_search.m" /* pathName
@@ -36,7 +36,7 @@ static emlrtRSInfo i_emlrtRSI = {
 };
 
 static emlrtRSInfo j_emlrtRSI = {
-    14,            /* lineNo */
+    17,            /* lineNo */
     "tone_search", /* fcnName */
     "D:\\user\\DropBox_Nsel\\ZERDLab "
     "Dropbox\\Nsel\\GIT\\Scanner\\Scaner_PC3\\matlab\\tone_search.m" /* pathName
@@ -44,7 +44,7 @@ static emlrtRSInfo j_emlrtRSI = {
 };
 
 static emlrtRSInfo k_emlrtRSI = {
-    18,            /* lineNo */
+    21,            /* lineNo */
     "tone_search", /* fcnName */
     "D:\\user\\DropBox_Nsel\\ZERDLab "
     "Dropbox\\Nsel\\GIT\\Scanner\\Scaner_PC3\\matlab\\tone_search.m" /* pathName
@@ -52,7 +52,7 @@ static emlrtRSInfo k_emlrtRSI = {
 };
 
 static emlrtRSInfo l_emlrtRSI = {
-    32,            /* lineNo */
+    35,            /* lineNo */
     "tone_search", /* fcnName */
     "D:\\user\\DropBox_Nsel\\ZERDLab "
     "Dropbox\\Nsel\\GIT\\Scanner\\Scaner_PC3\\matlab\\tone_search.m" /* pathName
@@ -60,7 +60,7 @@ static emlrtRSInfo l_emlrtRSI = {
 };
 
 static emlrtRSInfo m_emlrtRSI = {
-    33,            /* lineNo */
+    36,            /* lineNo */
     "tone_search", /* fcnName */
     "D:\\user\\DropBox_Nsel\\ZERDLab "
     "Dropbox\\Nsel\\GIT\\Scanner\\Scaner_PC3\\matlab\\tone_search.m" /* pathName
@@ -68,7 +68,7 @@ static emlrtRSInfo m_emlrtRSI = {
 };
 
 static emlrtRSInfo n_emlrtRSI = {
-    40,            /* lineNo */
+    43,            /* lineNo */
     "tone_search", /* fcnName */
     "D:\\user\\DropBox_Nsel\\ZERDLab "
     "Dropbox\\Nsel\\GIT\\Scanner\\Scaner_PC3\\matlab\\tone_search.m" /* pathName
@@ -76,7 +76,7 @@ static emlrtRSInfo n_emlrtRSI = {
 };
 
 static emlrtRSInfo o_emlrtRSI = {
-    42,            /* lineNo */
+    45,            /* lineNo */
     "tone_search", /* fcnName */
     "D:\\user\\DropBox_Nsel\\ZERDLab "
     "Dropbox\\Nsel\\GIT\\Scanner\\Scaner_PC3\\matlab\\tone_search.m" /* pathName
@@ -187,8 +187,8 @@ static emlrtRTEInfo emlrtRTEI = {
 
 /* Function Definitions */
 void tone_search(main_scannerStackData *SD, const emlrtStack *sp,
-                 const real_T T[1650001], real_T Signal[1650001], real_T *a,
-                 real_T *f, real_T *p, real_T FftS[6600000], real_T *Am)
+                 real_T Signal[1650001], real_T *a, real_T *f, real_T *p,
+                 real_T FftS[6600000], real_T *Am)
 {
   emlrtStack b_st;
   emlrtStack c_st;
@@ -198,19 +198,17 @@ void tone_search(main_scannerStackData *SD, const emlrtStack *sp,
   emlrtStack st;
   real_T A[4];
   real_T B[2];
-  real_T a21;
-  real_T absx;
+  real_T a22;
   real_T cs;
   real_T fL;
   real_T fR;
   real_T vL;
+  real_T vR;
   real_T ys;
   int32_T k;
   int32_T r1;
   int32_T r2;
-  int8_T n;
   boolean_T exitg1;
-  boolean_T guard1 = false;
   st.prev = sp;
   st.tls = sp->tls;
   b_st.prev = &st;
@@ -224,60 +222,20 @@ void tone_search(main_scannerStackData *SD, const emlrtStack *sp,
   f_st.prev = &e_st;
   f_st.tls = e_st.tls;
   covrtLogFcn(&emlrtCoverageInstance, 2U, 0U);
-  covrtLogBasicBlock(&emlrtCoverageInstance, 2U, 0U);
   /*  search and delete tones function */
-  *f *= 360.0;
-  for (k = 0; k < 1650001; k++) {
-    absx = *f * T[k] + *p;
-    if (muDoubleScalarIsInf(absx) || muDoubleScalarIsNaN(absx)) {
-      absx = rtNaN;
-    } else {
-      a21 = muDoubleScalarRem(absx, 360.0);
-      absx = muDoubleScalarAbs(a21);
-      if (absx > 180.0) {
-        if (a21 > 0.0) {
-          a21 -= 360.0;
-        } else {
-          a21 += 360.0;
-        }
-        absx = muDoubleScalarAbs(a21);
-      }
-      if (absx <= 45.0) {
-        a21 *= 0.017453292519943295;
-        absx = muDoubleScalarSin(a21);
-      } else {
-        guard1 = false;
-        if (absx <= 135.0) {
-          if (a21 > 0.0) {
-            a21 = 0.017453292519943295 * (a21 - 90.0);
-            absx = muDoubleScalarCos(a21);
-          } else {
-            a21 = 0.017453292519943295 * (a21 + 90.0);
-            n = -1;
-            guard1 = true;
-          }
-        } else {
-          if (a21 > 0.0) {
-            a21 = 0.017453292519943295 * (a21 - 180.0);
-            n = 2;
-          } else {
-            a21 = 0.017453292519943295 * (a21 + 180.0);
-            n = -2;
-          }
-          guard1 = true;
-        }
-        if (guard1) {
-          if (n == -1) {
-            absx = -muDoubleScalarCos(a21);
-          } else {
-            absx = -muDoubleScalarSin(a21);
-          }
-        }
-      }
+  for (r1 = 0; r1 < 1650001; r1++) {
+    covrtLogFor(&emlrtCoverageInstance, 2U, 0U, 0, 1);
+    covrtLogBasicBlock(&emlrtCoverageInstance, 2U, 0U);
+    /* Signal=Signal-a*sind((f*360).*T+p); % calculate the difference signal */
+    a22 = *f * 360.0 * (((real_T)r1 + 1.0) - 1.0) / 2.5E+6 + *p;
+    b_sind(&a22);
+    Signal[r1] -= *a * a22;
+    if (*emlrtBreakCheckR2012bFlagVar != 0) {
+      emlrtBreakCheckR2012b((emlrtCTX)sp);
     }
-    Signal[k] -= *a * absx;
   }
-  /*  calculate the difference signal */
+  covrtLogFor(&emlrtCoverageInstance, 2U, 0U, 0, 0);
+  covrtLogBasicBlock(&emlrtCoverageInstance, 2U, 1U);
   /*         %% Spectral representation of the input signal */
   st.site = &h_emlrtRSI;
   b_st.site = &p_emlrtRSI;
@@ -316,9 +274,9 @@ void tone_search(main_scannerStackData *SD, const emlrtStack *sp,
     *Am = FftS[r1 - 1];
     r2 = r1 + 1;
     for (k = r2; k < 6600001; k++) {
-      absx = FftS[k - 1];
-      if (*Am < absx) {
-        *Am = absx;
+      a22 = FftS[k - 1];
+      if (*Am < a22) {
+        *Am = a22;
         r1 = k;
       }
     }
@@ -335,29 +293,29 @@ void tone_search(main_scannerStackData *SD, const emlrtStack *sp,
   st.site = &i_emlrtRSI;
   vL = AmpPhase(&st, Signal, *f - 0.37878787878787878);
   st.site = &j_emlrtRSI;
-  absx = AmpPhase(&st, Signal, *f + 0.37878787878787878);
+  vR = AmpPhase(&st, Signal, *f + 0.37878787878787878);
   while (covrtLogWhile(&emlrtCoverageInstance, 2U, 0U, 0,
                        muDoubleScalarAbs(fR - fL) > 1.0E-7)) {
-    covrtLogBasicBlock(&emlrtCoverageInstance, 2U, 1U);
+    covrtLogBasicBlock(&emlrtCoverageInstance, 2U, 2U);
     /*  if the step did not reach the optimal error, then */
-    a21 = (fR + fL) / 2.0;
+    a22 = (fR + fL) / 2.0;
     st.site = &k_emlrtRSI;
-    cs = AmpPhase(&st, Signal, a21);
-    if (covrtLogIf(&emlrtCoverageInstance, 2U, 0U, 0, vL < absx)) {
-      covrtLogBasicBlock(&emlrtCoverageInstance, 2U, 2U);
+    cs = AmpPhase(&st, Signal, a22);
+    if (covrtLogIf(&emlrtCoverageInstance, 2U, 0U, 0, vL < vR)) {
+      covrtLogBasicBlock(&emlrtCoverageInstance, 2U, 3U);
       /*  if the maximum value is skipped, then */
-      fL = a21;
+      fL = a22;
       vL = cs;
     } else {
-      covrtLogBasicBlock(&emlrtCoverageInstance, 2U, 3U);
-      fR = a21;
-      absx = cs;
+      covrtLogBasicBlock(&emlrtCoverageInstance, 2U, 4U);
+      fR = a22;
+      vR = cs;
     }
     if (*emlrtBreakCheckR2012bFlagVar != 0) {
       emlrtBreakCheckR2012b((emlrtCTX)sp);
     }
   }
-  covrtLogBasicBlock(&emlrtCoverageInstance, 2U, 4U);
+  covrtLogBasicBlock(&emlrtCoverageInstance, 2U, 5U);
   /*  end of approximation in frequency */
   *f = (fR + fL) / 2.0;
   /*         %% Calculation of the amplitude and phase of the residue by the
@@ -369,37 +327,37 @@ void tone_search(main_scannerStackData *SD, const emlrtStack *sp,
   ys = 0.0;
   /*  initial assignments to amounts */
   for (r1 = 0; r1 < 1650001; r1++) {
-    covrtLogFor(&emlrtCoverageInstance, 2U, 0U, 0, 1);
-    covrtLogBasicBlock(&emlrtCoverageInstance, 2U, 5U);
+    covrtLogFor(&emlrtCoverageInstance, 2U, 0U, 1, 1);
+    covrtLogBasicBlock(&emlrtCoverageInstance, 2U, 6U);
     /*  number of time array indexes */
-    absx = *f * 720.0 * (real_T)r1 / 2.5E+6;
-    b_sind(&absx);
-    cs += absx / 2.0;
+    a22 = *f * 720.0 * (real_T)r1 / 2.5E+6;
+    b_sind(&a22);
+    cs += a22 / 2.0;
     /*  simplification cos(x)*sin(x)=sin(2*x)/2 */
     st.site = &l_emlrtRSI;
-    absx = *f * 360.0 * (real_T)r1 / 2.5E+6;
-    a21 = absx;
-    b_cosd(&a21);
+    a22 = *f * 360.0 * (real_T)r1 / 2.5E+6;
+    vR = a22;
+    b_cosd(&vR);
     b_st.site = &x_emlrtRSI;
     c_st.site = &y_emlrtRSI;
-    fL += a21 * a21;
+    fL += vR * vR;
     /*  time starts from zero, */
     st.site = &m_emlrtRSI;
-    b_sind(&absx);
+    b_sind(&a22);
     b_st.site = &x_emlrtRSI;
     c_st.site = &y_emlrtRSI;
-    fR += absx * absx;
+    fR += a22 * a22;
     /*  and the index starts from one */
-    vL += Signal[r1] * a21;
+    vL += Signal[r1] * vR;
     /*  so in sines and cosines is i */
-    ys += Signal[r1] * absx;
+    ys += Signal[r1] * a22;
     /*  and the signal contains the index i + 1 */
     if (*emlrtBreakCheckR2012bFlagVar != 0) {
       emlrtBreakCheckR2012b((emlrtCTX)sp);
     }
   }
-  covrtLogFor(&emlrtCoverageInstance, 2U, 0U, 0, 0);
-  covrtLogBasicBlock(&emlrtCoverageInstance, 2U, 6U);
+  covrtLogFor(&emlrtCoverageInstance, 2U, 0U, 1, 0);
+  covrtLogBasicBlock(&emlrtCoverageInstance, 2U, 7U);
   /*  end of accumulation of sums for the matrix */
   A[0] = fL;
   A[2] = cs;
@@ -421,29 +379,29 @@ void tone_search(main_scannerStackData *SD, const emlrtStack *sp,
     r1 = 0;
     r2 = 1;
   }
-  a21 = A[r2] / A[r1];
+  vR = A[r2] / A[r1];
   cs = A[r1 + 2];
-  absx = A[r2 + 2] - a21 * cs;
-  if ((absx == 0.0) || (A[r1] == 0.0)) {
+  a22 = A[r2 + 2] - vR * cs;
+  if ((a22 == 0.0) || (A[r1] == 0.0)) {
     e_st.site = &db_emlrtRSI;
     f_st.site = &eb_emlrtRSI;
     warning(&f_st);
   }
-  fL = (B[r2] - B[r1] * a21) / absx;
+  fL = (B[r2] - B[r1] * vR) / a22;
   cs = (B[r1] - fL * cs) / A[r1];
   /*  solution vector */
   memcpy(&SD->f0.x[0], &FftS[0], 791974U * sizeof(real_T));
-  absx = sumColumnB4(SD->f0.x, 1);
+  vR = sumColumnB4(SD->f0.x, 1);
   for (r1 = 0; r1 < 192; r1++) {
-    absx += sumColumnB4(SD->f0.x, ((r1 + 1) << 12) + 1);
+    vR += sumColumnB4(SD->f0.x, ((r1 + 1) << 12) + 1);
   }
-  a21 = b_sumColumnB4(*(real_T(*)[32868]) & FftS[792131], 1);
+  a22 = b_sumColumnB4(*(real_T(*)[32868]) & FftS[792131], 1);
   for (r1 = 0; r1 < 7; r1++) {
-    a21 +=
+    a22 +=
         b_sumColumnB4(*(real_T(*)[32868]) & FftS[792131], ((r1 + 1) << 12) + 1);
   }
-  *a = ((absx + sumColumnB(SD->f0.x)) / 791974.0 +
-        (a21 + b_sumColumnB(*(real_T(*)[32868]) & FftS[792131])) / 32868.0) /
+  *a = ((vR + sumColumnB(SD->f0.x)) / 791974.0 +
+        (a22 + b_sumColumnB(*(real_T(*)[32868]) & FftS[792131])) / 32868.0) /
        2.0;
   /*  average noise amplitude */
   st.site = &o_emlrtRSI;

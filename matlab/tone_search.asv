@@ -1,8 +1,6 @@
 function [ Signal, FftS, Am, a, f, p ] = tone_search( SGD, Signal, a, f, p ) % search and delete tones function
     for i = 1:length(Signal)
     %Signal=Signal-a*sind((f*360).*T+p); % calculate the difference signal
-    Signal(i)=Signal(i)-a*sind((f*360)*(i-1)/SGD.Fd+p);
-    end
         %% Spectral representation of the input signal
     FftS=abs(fft(Signal,SGD.FftL));     % signal Fourier transform amplitude
     FftS=2*FftS./SGD.FftL;              % amplitude normalization of the spectrum

@@ -27,31 +27,31 @@ static void main_scanner_once(void)
       "Dropbox\\Nsel\\GIT\\Scanner\\Scaner_PC3\\matlab\\main_scanner.m",
       0U, 1U, 12U, 6U, 0U, 0U, 0U, 0U, 1U, 0U, 0U);
   /* Initialize Function Information */
-  covrtFcnInit(&emlrtCoverageInstance, 0U, 0U, "main_scanner", 0, -1, 2584);
+  covrtFcnInit(&emlrtCoverageInstance, 0U, 0U, "main_scanner", 0, -1, 2581);
   /* Initialize Basic Block Information */
-  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 11U, 2463, -1, 2553);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 10U, 2347, -1, 2437);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 9U, 2075, -1, 2300);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 8U, 1966, -1, 2052);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 7U, 1854, -1, 1940);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 6U, 1619, -1, 1705);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 5U, 1507, -1, 1597);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 4U, 1391, -1, 1481);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 3U, 1123, -1, 1242);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 2U, 848, -1, 936);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 1U, 498, -1, 656);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 0U, 69, -1, 244);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 11U, 2460, -1, 2550);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 10U, 2344, -1, 2434);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 9U, 2072, -1, 2297);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 8U, 1963, -1, 2049);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 7U, 1851, -1, 1937);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 6U, 1616, -1, 1702);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 5U, 1504, -1, 1594);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 4U, 1388, -1, 1478);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 3U, 1120, -1, 1239);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 2U, 843, -1, 931);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 1U, 496, -1, 651);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 0U, 0U, 69, -1, 242);
   /* Initialize If Information */
-  covrtIfInit(&emlrtCoverageInstance, 0U, 0U, 721, 746, -1, 968);
-  covrtIfInit(&emlrtCoverageInstance, 0U, 1U, 977, 1002, -1, 1114);
-  covrtIfInit(&emlrtCoverageInstance, 0U, 2U, 1040, 1060, -1, 1102);
-  covrtIfInit(&emlrtCoverageInstance, 0U, 3U, 1353, 1378, 1490, 1609);
-  covrtIfInit(&emlrtCoverageInstance, 0U, 4U, 1816, 1841, 1949, 2064);
-  covrtIfInit(&emlrtCoverageInstance, 0U, 5U, 2309, 2334, 2446, 2565);
+  covrtIfInit(&emlrtCoverageInstance, 0U, 0U, 716, 741, -1, 963);
+  covrtIfInit(&emlrtCoverageInstance, 0U, 1U, 972, 997, -1, 1111);
+  covrtIfInit(&emlrtCoverageInstance, 0U, 2U, 1035, 1057, -1, 1099);
+  covrtIfInit(&emlrtCoverageInstance, 0U, 3U, 1350, 1375, 1487, 1606);
+  covrtIfInit(&emlrtCoverageInstance, 0U, 4U, 1813, 1838, 1946, 2061);
+  covrtIfInit(&emlrtCoverageInstance, 0U, 5U, 2306, 2331, 2443, 2562);
   /* Initialize MCDC Information */
   /* Initialize For Information */
   /* Initialize While Information */
-  covrtWhileInit(&emlrtCoverageInstance, 0U, 0U, 334, 352, 2584);
+  covrtWhileInit(&emlrtCoverageInstance, 0U, 0U, 332, 350, 2581);
   /* Initialize Switch Information */
   /* Start callback for coverage engine */
   covrtScriptStart(&emlrtCoverageInstance, 0U);
@@ -64,9 +64,9 @@ static void main_scanner_once(void)
       "Dropbox\\Nsel\\GIT\\Scanner\\Scaner_PC3\\matlab\\globalconst.m",
       1U, 1U, 1U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U);
   /* Initialize Function Information */
-  covrtFcnInit(&emlrtCoverageInstance, 1U, 0U, "globalconst", 0, -1, 823);
+  covrtFcnInit(&emlrtCoverageInstance, 1U, 0U, "globalconst", 0, -1, 822);
   /* Initialize Basic Block Information */
-  covrtBasicBlockInit(&emlrtCoverageInstance, 1U, 0U, 113, -1, 818);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 1U, 0U, 111, -1, 790);
   /* Initialize If Information */
   /* Initialize MCDC Information */
   /* Initialize For Information */
@@ -81,24 +81,26 @@ static void main_scanner_once(void)
       &emlrtCoverageInstance,
       "D:\\user\\DropBox_Nsel\\ZERDLab "
       "Dropbox\\Nsel\\GIT\\Scanner\\Scaner_PC3\\matlab\\tone_search.m",
-      2U, 1U, 7U, 1U, 0U, 0U, 0U, 1U, 1U, 0U, 0U);
+      2U, 1U, 8U, 1U, 0U, 0U, 0U, 2U, 1U, 0U, 0U);
   /* Initialize Function Information */
-  covrtFcnInit(&emlrtCoverageInstance, 2U, 0U, "tone_search", 0, -1, 2721);
+  covrtFcnInit(&emlrtCoverageInstance, 2U, 0U, "tone_search", 0, -1, 2812);
   /* Initialize Basic Block Information */
-  covrtBasicBlockInit(&emlrtCoverageInstance, 2U, 3U, 1301, -1, 1326);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 2U, 2U, 1250, -1, 1275);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 2U, 1U, 1109, -1, 1160);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 2U, 6U, 2161, -1, 2682);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 2U, 5U, 1696, -1, 2033);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 2U, 4U, 1415, -1, 1581);
-  covrtBasicBlockInit(&emlrtCoverageInstance, 2U, 0U, 119, -1, 999);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 2U, 4U, 1392, -1, 1417);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 2U, 3U, 1341, -1, 1366);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 2U, 2U, 1200, -1, 1251);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 2U, 7U, 2252, -1, 2773);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 2U, 6U, 1787, -1, 2124);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 2U, 5U, 1506, -1, 1672);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 2U, 1U, 339, -1, 1090);
+  covrtBasicBlockInit(&emlrtCoverageInstance, 2U, 0U, 220, -1, 271);
   /* Initialize If Information */
-  covrtIfInit(&emlrtCoverageInstance, 2U, 0U, 1169, 1177, 1284, 1338);
+  covrtIfInit(&emlrtCoverageInstance, 2U, 0U, 1260, 1268, 1375, 1429);
   /* Initialize MCDC Information */
   /* Initialize For Information */
-  covrtForInit(&emlrtCoverageInstance, 2U, 0U, 1625, 1641, 2083);
+  covrtForInit(&emlrtCoverageInstance, 2U, 0U, 116, 140, 279);
+  covrtForInit(&emlrtCoverageInstance, 2U, 1U, 1716, 1732, 2174);
   /* Initialize While Information */
-  covrtWhileInit(&emlrtCoverageInstance, 2U, 0U, 1009, 1035, 1346);
+  covrtWhileInit(&emlrtCoverageInstance, 2U, 0U, 1100, 1126, 1437);
   /* Initialize Switch Information */
   /* Start callback for coverage engine */
   covrtScriptStart(&emlrtCoverageInstance, 2U);

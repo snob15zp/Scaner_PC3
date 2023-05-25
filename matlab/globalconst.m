@@ -1,4 +1,4 @@
-function [SGD,T] = globalconst()
+function [SGD] = globalconst()
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 Fd=2500000;
@@ -22,6 +22,6 @@ SGD.folder='..\txt\';
 SGD.f_err=1e-7;
 SGD.a_err=1e-6;
 
-T=(0:1:SGD.Ffts)/SGD.Fd;
+%T=(0:1:SGD.Ffts)/SGD.Fd;
 
 end

@@ -20,7 +20,7 @@
 
 /* Function Declarations */
 void tone_search(main_scannerStackData *SD, const emlrtStack *sp,
-                 const real_T T[1650001], real_T Signal[1650001], real_T *a,
-                 real_T *f, real_T *p, real_T FftS[6600000], real_T *Am);
+                 real_T Signal[1650001], real_T *a, real_T *f, real_T *p,
+                 real_T FftS[6600000], real_T *Am);
 
 /* End of code generation (tone_search.h) */
