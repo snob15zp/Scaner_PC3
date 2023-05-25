@@ -51,21 +51,21 @@ static double rt_roundd_snf(double u)
 void filesave_ceval(emxArray_real_T *data, const emxArray_char_T *filename,
                     const double sz[2])
 {
-  static const char b_cpath[8] = "..\\txt\\";
+  static const char b_cpath[] = "..\\txt\\";
   emxArray_char_T *r;
   emxArray_char_T *r2;
   double d;
   double *data_data;
   int i;
   int loop_ub;
-  char cpath[8];
+  char cpath[40];
   const char *filename_data;
   char *r1;
   char *r3;
   filename_data = filename->data;
   data_data = data->data;
   /* path='c:\prezerv\'; */
-  for (i = 0; i < 8; i++) {
+  for (i = 0; i < 40; i++) {
     cpath[i] = b_cpath[i];
   }
   emxInit_char_T(&r);

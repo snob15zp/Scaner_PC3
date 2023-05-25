@@ -19,7 +19,7 @@ extern "C" void filesave(const double *data, int size1, int size2, char *path,
 void filesave_cpp (const double *data, int  size1,int size2, char* path, char *filename, int t)
 {
     std::string FullFileName;
-    //FullFileName=std::string(path);
+    FullFileName=std::string(path);
     //getpath(FullFileName);
     FullFileName+=std::string(filename);
 
@@ -84,9 +84,11 @@ std::string FullFileName1;
 std::string FullFileName2;
 
 //getpath(FullFileName1);
+FullFileName1 = std::string(path);
 FullFileName1+=std::string(filename1);
 
 //getpath(FullFileName2);
+FullFileName2 = std::string(path);
 FullFileName2+="REF_"+std::string(filename1);
 
 //FullFileName1=std::string(path)+std::string(filename1);
