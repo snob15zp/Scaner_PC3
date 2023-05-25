@@ -2,7 +2,7 @@
  * File: cosd.h
  *
  * MATLAB Coder version            : 5.3
- * C/C++ source code generated on  : 25-May-2023 14:13:44
+ * C/C++ source code generated on  : 25-May-2023 16:43:58
  */
 
 #ifndef COSD_H

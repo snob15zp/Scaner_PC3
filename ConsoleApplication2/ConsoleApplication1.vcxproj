@@ -25,6 +25,7 @@
     <ClCompile Include="matlab\cosd.c" />
     <ClCompile Include="matlab\fft.c" />
     <ClCompile Include="matlab\FFTImplementationCallback.c" />
+    <ClCompile Include="matlab\filesave_ceval.c" />
     <ClCompile Include="matlab\main_scanner.c" />
     <ClCompile Include="matlab\main_scanner_data.c" />
     <ClCompile Include="matlab\main_scanner_emxutil.c" />
@@ -35,6 +36,7 @@
     <ClCompile Include="matlab\rtGetNaN.c" />
     <ClCompile Include="matlab\rt_nonfinite.c" />
     <ClCompile Include="matlab\sind.c" />
+    <ClCompile Include="matlab\sprintf.c" />
     <ClCompile Include="matlab\tone_search.c" />
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +47,7 @@
     <ClInclude Include="matlab\cosd.h" />
     <ClInclude Include="matlab\fft.h" />
     <ClInclude Include="matlab\FFTImplementationCallback.h" />
+    <ClInclude Include="matlab\filesave_ceval.h" />
     <ClInclude Include="matlab\main_scanner.h" />
     <ClInclude Include="matlab\main_scanner_data.h" />
     <ClInclude Include="matlab\main_scanner_emxutil.h" />
@@ -57,6 +60,7 @@
     <ClInclude Include="matlab\rtwtypes.h" />
     <ClInclude Include="matlab\rt_nonfinite.h" />
     <ClInclude Include="matlab\sind.h" />
+    <ClInclude Include="matlab\sprintf.h" />
     <ClInclude Include="matlab\tone_search.h" />
     <ClInclude Include="matlab_additions\tmwtypes.h" />
   </ItemGroup>

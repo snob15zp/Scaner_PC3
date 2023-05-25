@@ -2,17 +2,17 @@
  * File: main_scanner.c
  *
  * MATLAB Coder version            : 5.3
- * C/C++ source code generated on  : 25-May-2023 14:13:44
+ * C/C++ source code generated on  : 25-May-2023 16:43:58
  */
 
 /* Include Files */
 #include "main_scanner.h"
+#include "filesave_ceval.h"
 #include "main_scanner_emxutil.h"
 #include "main_scanner_types.h"
 #include "rt_nonfinite.h"
+#include "sprintf.h"
 #include "tone_search.h"
-#include <stddef.h>
-#include <stdio.h>
 #include <string.h>
 
 /* Function Definitions */
@@ -26,17 +26,22 @@
  */
 void main_scanner(double Signal[1650001], double Out[300], double FftS[6600000])
 {
-  emxArray_char_T *b_str;
-  emxArray_char_T *c_str;
-  emxArray_char_T *str;
+  static const char b_fn3[6] = {'s', 'i', 'g', 'n', 'a', 'l'};
+  static const char c_fn3[6] = {'F', 'f', 't', 'S', '_', 'I'};
+  emxArray_char_T *fn3;
+  emxArray_char_T *fn3a;
+  emxArray_real_T *b_Signal;
+  double dv[2];
   double Am;
   double a;
   double f;
   double p;
+  double *Signal_data;
+  int Out_tmp;
   int b_i;
   int i;
-  int nbytes;
-  char *str_data;
+  char *fn3_data;
+  char *fn3a_data;
   Am = 1.0;
   a = 0.0;
   f = 0.0;
@@ -47,49 +52,119 @@ void main_scanner(double Signal[1650001], double Out[300], double FftS[6600000])
   memset(&FftS[0], 0, 6600000U * sizeof(double));
   /*         %% The main cycle of searching and subtracting the tone of maximum
    * amplitude */
-  emxInit_char_T(&str);
-  emxInit_char_T(&b_str);
-  emxInit_char_T(&c_str);
+  emxInit_char_T(&fn3a);
+  emxInit_char_T(&fn3);
+  emxInit_real_T(&b_Signal);
   while (Am > 1.0E-6) {
     /*  if the amplitude of the subtraction is greater than the specified
      * threshold , then we look for and subtract the next tone */
     tone_search(Signal, &a, &f, &p, FftS, &Am);
     /*  tone search and subtraction function */
     i++;
-    nbytes = 3 * (i - 1);
-    Out[nbytes] = a;
-    Out[nbytes + 1] = f;
-    Out[nbytes + 2] = p;
+    Out_tmp = 3 * (i - 1);
+    Out[Out_tmp] = a;
+    Out[Out_tmp + 1] = f;
+    Out[Out_tmp + 2] = p;
     /*  fill the output array : amplitude , frequency , phase */
-    nbytes = (int)snprintf(NULL, 0, "%i", i) + 1;
-    b_i = str->size[0] * str->size[1];
-    str->size[0] = 1;
-    str->size[1] = nbytes;
-    emxEnsureCapacity_char_T(str, b_i);
-    str_data = str->data;
-    snprintf(&str_data[0], (size_t)nbytes, "%i", i);
+    b_sprintf(i, fn3a);
+    fn3a_data = fn3a->data;
     /* coder.varsize('ActVal1',[qblobs,DmaxSize]); */
     /* ActVal1(1:qblobs,:)=ActVal(1:qblobs,:); */
-    nbytes = (int)snprintf(NULL, 0, "%i", i) + 1;
-    b_i = b_str->size[0] * b_str->size[1];
-    b_str->size[0] = 1;
-    b_str->size[1] = nbytes;
-    emxEnsureCapacity_char_T(b_str, b_i);
-    str_data = b_str->data;
-    snprintf(&str_data[0], (size_t)nbytes, "%i", i);
+    b_i = fn3->size[0] * fn3->size[1];
+    fn3->size[0] = 1;
+    fn3->size[1] = fn3a->size[1] + 11;
+    emxEnsureCapacity_char_T(fn3, b_i);
+    fn3_data = fn3->data;
+    for (b_i = 0; b_i < 6; b_i++) {
+      fn3_data[b_i] = b_fn3[b_i];
+    }
+    Out_tmp = fn3a->size[1];
+    for (b_i = 0; b_i < Out_tmp; b_i++) {
+      fn3_data[b_i + 6] = fn3a_data[b_i];
+    }
+    fn3_data[fn3a->size[1] + 6] = '.';
+    fn3_data[fn3a->size[1] + 7] = 't';
+    fn3_data[fn3a->size[1] + 8] = 'x';
+    fn3_data[fn3a->size[1] + 9] = 't';
+    fn3_data[fn3a->size[1] + 10] = '\x00';
+    dv[0] = 1.0;
+    dv[1] = 1.650001E+6;
+    b_i = b_Signal->size[0] * b_Signal->size[1];
+    b_Signal->size[0] = 1;
+    b_Signal->size[1] = 1650001;
+    emxEnsureCapacity_real_T(b_Signal, b_i);
+    Signal_data = b_Signal->data;
+    for (b_i = 0; b_i < 1650001; b_i++) {
+      Signal_data[b_i] = Signal[b_i];
+    }
+    filesave_ceval(b_Signal, fn3, dv);
+    b_sprintf(i, fn3a);
+    fn3a_data = fn3a->data;
     /* coder.varsize('ActVal1',[qblobs,DmaxSize]); */
     /* ActVal1(1:qblobs,:)=ActVal(1:qblobs,:); */
-    nbytes = (int)snprintf(NULL, 0, "%i", i) + 1;
-    b_i = c_str->size[0] * c_str->size[1];
-    c_str->size[0] = 1;
-    c_str->size[1] = nbytes;
-    emxEnsureCapacity_char_T(c_str, b_i);
-    str_data = c_str->data;
-    snprintf(&str_data[0], (size_t)nbytes, "%i", i);
+    b_i = fn3->size[0] * fn3->size[1];
+    fn3->size[0] = 1;
+    fn3->size[1] = fn3a->size[1] + 9;
+    emxEnsureCapacity_char_T(fn3, b_i);
+    fn3_data = fn3->data;
+    fn3_data[0] = 'F';
+    fn3_data[1] = 'f';
+    fn3_data[2] = 't';
+    fn3_data[3] = 'S';
+    Out_tmp = fn3a->size[1];
+    for (b_i = 0; b_i < Out_tmp; b_i++) {
+      fn3_data[b_i + 4] = fn3a_data[b_i];
+    }
+    fn3_data[fn3a->size[1] + 4] = '.';
+    fn3_data[fn3a->size[1] + 5] = 't';
+    fn3_data[fn3a->size[1] + 6] = 'x';
+    fn3_data[fn3a->size[1] + 7] = 't';
+    fn3_data[fn3a->size[1] + 8] = '\x00';
+    dv[0] = 1.0;
+    dv[1] = 6.6E+6;
+    b_i = b_Signal->size[0] * b_Signal->size[1];
+    b_Signal->size[0] = 1;
+    b_Signal->size[1] = 6600000;
+    emxEnsureCapacity_real_T(b_Signal, b_i);
+    Signal_data = b_Signal->data;
+    for (b_i = 0; b_i < 6600000; b_i++) {
+      Signal_data[b_i] = FftS[b_i];
+    }
+    filesave_ceval(b_Signal, fn3, dv);
+    b_sprintf(i, fn3a);
+    fn3a_data = fn3a->data;
+    b_i = b_Signal->size[0] * b_Signal->size[1];
+    b_Signal->size[0] = 1;
+    b_Signal->size[1] = 159;
+    emxEnsureCapacity_real_T(b_Signal, b_i);
+    Signal_data = b_Signal->data;
+    for (b_i = 0; b_i < 159; b_i++) {
+      Signal_data[b_i] = 4.0 * FftS[b_i + 791973];
+    }
+    b_i = fn3->size[0] * fn3->size[1];
+    fn3->size[0] = 1;
+    fn3->size[1] = fn3a->size[1] + 11;
+    emxEnsureCapacity_char_T(fn3, b_i);
+    fn3_data = fn3->data;
+    for (b_i = 0; b_i < 6; b_i++) {
+      fn3_data[b_i] = c_fn3[b_i];
+    }
+    Out_tmp = fn3a->size[1];
+    for (b_i = 0; b_i < Out_tmp; b_i++) {
+      fn3_data[b_i + 6] = fn3a_data[b_i];
+    }
+    fn3_data[fn3a->size[1] + 6] = '.';
+    fn3_data[fn3a->size[1] + 7] = 't';
+    fn3_data[fn3a->size[1] + 8] = 'x';
+    fn3_data[fn3a->size[1] + 9] = 't';
+    fn3_data[fn3a->size[1] + 10] = '\x00';
+    dv[0] = 1.0;
+    dv[1] = 159.0;
+    filesave_ceval(b_Signal, fn3, dv);
   }
-  emxFree_char_T(&c_str);
-  emxFree_char_T(&b_str);
-  emxFree_char_T(&str);
+  emxFree_real_T(&b_Signal);
+  emxFree_char_T(&fn3);
+  emxFree_char_T(&fn3a);
 }
 
 /*

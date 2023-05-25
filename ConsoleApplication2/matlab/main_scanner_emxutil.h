@@ -2,7 +2,7 @@
  * File: main_scanner_emxutil.h
  *
  * MATLAB Coder version            : 5.3
- * C/C++ source code generated on  : 25-May-2023 14:13:44
+ * C/C++ source code generated on  : 25-May-2023 16:43:58
  */
 
 #ifndef MAIN_SCANNER_EMXUTIL_H
@@ -21,9 +21,15 @@ extern "C" {
 /* Function Declarations */
 extern void emxEnsureCapacity_char_T(emxArray_char_T *emxArray, int oldNumel);
 
+extern void emxEnsureCapacity_real_T(emxArray_real_T *emxArray, int oldNumel);
+
 extern void emxFree_char_T(emxArray_char_T **pEmxArray);
 
+extern void emxFree_real_T(emxArray_real_T **pEmxArray);
+
 extern void emxInit_char_T(emxArray_char_T **pEmxArray);
+
+extern void emxInit_real_T(emxArray_real_T **pEmxArray);
 
 #ifdef __cplusplus
 }

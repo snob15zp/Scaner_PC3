@@ -2,7 +2,7 @@
 ## Makefile generated for component 'main_scanner'. 
 ## 
 ## Makefile     : main_scanner_rtw.mk
-## Generated on : Thu May 25 14:14:00 2023
+## Generated on : Thu May 25 16:44:16 2023
 ## Final product: ./main_scanner.lib
 ## Product type : static-library
 ## 
@@ -183,7 +183,7 @@ DEFINES = $(DEFINES_) $(DEFINES_CUSTOM) $(DEFINES_STANDARD)
 ## SOURCE FILES
 ###########################################################################
 
-SRCS = $(START_DIR)/filesave.cpp $(START_DIR)/codegen/lib/main_scanner/main_scanner_data.c $(START_DIR)/codegen/lib/main_scanner/rt_nonfinite.c $(START_DIR)/codegen/lib/main_scanner/rtGetNaN.c $(START_DIR)/codegen/lib/main_scanner/rtGetInf.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_initialize.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_terminate.c $(START_DIR)/codegen/lib/main_scanner/main_scanner.c $(START_DIR)/codegen/lib/main_scanner/fft.c $(START_DIR)/codegen/lib/main_scanner/FFTImplementationCallback.c $(START_DIR)/codegen/lib/main_scanner/sind.c $(START_DIR)/codegen/lib/main_scanner/tone_search.c $(START_DIR)/codegen/lib/main_scanner/cosd.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_emxutil.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_rtwutil.c
+SRCS = $(START_DIR)/filesave.cpp $(START_DIR)/codegen/lib/main_scanner/main_scanner_data.c $(START_DIR)/codegen/lib/main_scanner/rt_nonfinite.c $(START_DIR)/codegen/lib/main_scanner/rtGetNaN.c $(START_DIR)/codegen/lib/main_scanner/rtGetInf.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_initialize.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_terminate.c $(START_DIR)/codegen/lib/main_scanner/main_scanner.c $(START_DIR)/codegen/lib/main_scanner/fft.c $(START_DIR)/codegen/lib/main_scanner/FFTImplementationCallback.c $(START_DIR)/codegen/lib/main_scanner/sprintf.c $(START_DIR)/codegen/lib/main_scanner/filesave_ceval.c $(START_DIR)/codegen/lib/main_scanner/sind.c $(START_DIR)/codegen/lib/main_scanner/tone_search.c $(START_DIR)/codegen/lib/main_scanner/cosd.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_emxutil.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_rtwutil.c
 
 ALL_SRCS = $(SRCS)
 
@@ -191,7 +191,7 @@ ALL_SRCS = $(SRCS)
 ## OBJECTS
 ###########################################################################
 
-OBJS = filesave.obj main_scanner_data.obj rt_nonfinite.obj rtGetNaN.obj rtGetInf.obj main_scanner_initialize.obj main_scanner_terminate.obj main_scanner.obj fft.obj FFTImplementationCallback.obj sind.obj tone_search.obj cosd.obj main_scanner_emxutil.obj main_scanner_rtwutil.obj
+OBJS = filesave.obj main_scanner_data.obj rt_nonfinite.obj rtGetNaN.obj rtGetInf.obj main_scanner_initialize.obj main_scanner_terminate.obj main_scanner.obj fft.obj FFTImplementationCallback.obj sprintf.obj filesave_ceval.obj sind.obj tone_search.obj cosd.obj main_scanner_emxutil.obj main_scanner_rtwutil.obj
 
 ALL_OBJS = $(OBJS)
 
@@ -371,6 +371,14 @@ fft.obj : $(START_DIR)/codegen/lib/main_scanner/fft.c
 
 
 FFTImplementationCallback.obj : $(START_DIR)/codegen/lib/main_scanner/FFTImplementationCallback.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
+sprintf.obj : $(START_DIR)/codegen/lib/main_scanner/sprintf.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
+filesave_ceval.obj : $(START_DIR)/codegen/lib/main_scanner/filesave_ceval.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
