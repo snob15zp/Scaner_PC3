@@ -2,7 +2,7 @@
  * File: main.c
  *
  * MATLAB Coder version            : 5.3
- * C/C++ source code generated on  : 22-May-2023 20:18:43
+ * C/C++ source code generated on  : 24-May-2023 23:19:00
  */
 
 /*************************************************************************/
@@ -33,14 +33,11 @@
 /* Include Files */
 #include "main.h"
 #include "main_scanner.h"
-#include "main_scanner_emxAPI.h"
 #include "main_scanner_terminate.h"
-#include "main_scanner_types.h"
 #include "rt_nonfinite.h"
-#include <string.h>
 
 /* Function Declarations */
-static void argInit_1x2500001_real_T(double result[2500001]);
+static void argInit_1x1650001_real_T(double result[1650001]);
 
 static double argInit_real_T(void);
 
@@ -48,14 +45,14 @@ static void main_main_scanner(void);
 
 /* Function Definitions */
 /*
- * Arguments    : double result[2500001]
+ * Arguments    : double result[1650001]
  * Return Type  : void
  */
-static void argInit_1x2500001_real_T(double result[2500001])
+static void argInit_1x1650001_real_T(double result[1650001])
 {
   int idx1;
   /* Loop over the array to initialize each element. */
-  for (idx1 = 0; idx1 < 2500001; idx1++) {
+  for (idx1 = 0; idx1 < 1650001; idx1++) {
     /* Set the value of the array element.
 Change this value to the value that the application requires. */
     result[idx1] = argInit_real_T();
@@ -77,21 +74,14 @@ static double argInit_real_T(void)
  */
 static void main_main_scanner(void)
 {
-  static double T_tmp[2500001];
-  static double b_T_tmp[2500001];
-  emxArray_real_T *FftS;
+  static double FftS[6600000];
+  static double dv[1650001];
   double Out[300];
-  double Tm_tmp;
-  emxInitArray_real_T(&FftS, 2);
   /* Initialize function 'main_scanner' input arguments. */
-  Tm_tmp = argInit_real_T();
-  /* Initialize function input argument 'T'. */
-  argInit_1x2500001_real_T(T_tmp);
   /* Initialize function input argument 'Signal'. */
   /* Call the entry-point 'main_scanner'. */
-  memcpy(&b_T_tmp[0], &T_tmp[0], 2500001U * sizeof(double));
-  main_scanner(Tm_tmp, Tm_tmp, Tm_tmp, Tm_tmp, T_tmp, b_T_tmp, Out, FftS);
-  emxDestroyArray_real_T(FftS);
+  argInit_1x1650001_real_T(dv);
+  main_scanner(dv, Out, FftS);
 }
 
 /*

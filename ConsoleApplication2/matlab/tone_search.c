@@ -2,17 +2,14 @@
  * File: tone_search.c
  *
  * MATLAB Coder version            : 5.3
- * C/C++ source code generated on  : 22-May-2023 20:18:43
+ * C/C++ source code generated on  : 24-May-2023 23:19:00
  */
 
 /* Include Files */
 #include "tone_search.h"
 #include "cosd.h"
 #include "fft.h"
-#include "main_scanner_emxutil.h"
 #include "main_scanner_rtwutil.h"
-#include "main_scanner_types.h"
-#include "mean.h"
 #include "rt_nonfinite.h"
 #include "sind.h"
 #include "rt_nonfinite.h"
@@ -48,305 +45,288 @@ static double rt_hypotd_snf(double u0, double u1)
 /*
  * search and delete tones function
  *
- * Arguments    : double Tm
- *                double Fd
- *                double mz
- *                double FftL
- *                const double T[2500001]
- *                double Signal[2500001]
+ * Arguments    : const double T[1650001]
+ *                double Signal[1650001]
  *                double *a
  *                double *f
  *                double *p
- *                emxArray_real_T *FftS
+ *                double FftS[6600000]
  *                double *Am
  * Return Type  : void
  */
-void tone_search(double Tm, double Fd, double mz, double FftL,
-                 const double T[2500001], double Signal[2500001], double *a,
-                 double *f, double *p, emxArray_real_T *FftS, double *Am)
+void tone_search(const double T[1650001], double Signal[1650001], double *a,
+                 double *f, double *p, double FftS[6600000], double *Am)
 {
-  emxArray_creal_T *x;
-  emxArray_real_T *b_FftS;
-  emxArray_real_T *c_FftS;
-  creal_T *x_data;
+  static creal_T x[6600000];
   double A[4];
   double B[2];
+  double a_tmp;
   double absx;
   double cc;
   double d;
-  double ex;
-  double ff;
-  double hf;
+  double fL;
+  double fR;
   double ss;
-  double yc;
-  double ys;
-  double *FftS_data;
-  double *b_FftS_data;
-  int i;
+  double vL;
+  double vR;
+  int ib;
   int k;
-  int last;
-  int nx;
+  int r1;
+  int r2;
   signed char n;
   boolean_T exitg1;
   *f *= 360.0;
-  for (k = 0; k < 2500001; k++) {
+  for (k = 0; k < 1650001; k++) {
     d = *f * T[k] + *p;
     if (rtIsInf(d) || rtIsNaN(d)) {
       d = rtNaN;
     } else {
-      hf = rt_remd_snf(d, 360.0);
-      absx = fabs(hf);
+      vR = rt_remd_snf(d, 360.0);
+      absx = fabs(vR);
       if (absx > 180.0) {
-        if (hf > 0.0) {
-          hf -= 360.0;
+        if (vR > 0.0) {
+          vR -= 360.0;
         } else {
-          hf += 360.0;
+          vR += 360.0;
         }
-        absx = fabs(hf);
+        absx = fabs(vR);
       }
       if (absx <= 45.0) {
-        hf *= 0.017453292519943295;
+        vR *= 0.017453292519943295;
         n = 0;
       } else if (absx <= 135.0) {
-        if (hf > 0.0) {
-          hf = 0.017453292519943295 * (hf - 90.0);
+        if (vR > 0.0) {
+          vR = 0.017453292519943295 * (vR - 90.0);
           n = 1;
         } else {
-          hf = 0.017453292519943295 * (hf + 90.0);
+          vR = 0.017453292519943295 * (vR + 90.0);
           n = -1;
         }
-      } else if (hf > 0.0) {
-        hf = 0.017453292519943295 * (hf - 180.0);
+      } else if (vR > 0.0) {
+        vR = 0.017453292519943295 * (vR - 180.0);
         n = 2;
       } else {
-        hf = 0.017453292519943295 * (hf + 180.0);
+        vR = 0.017453292519943295 * (vR + 180.0);
         n = -2;
       }
       if (n == 0) {
-        d = sin(hf);
+        d = sin(vR);
       } else if (n == 1) {
-        d = cos(hf);
+        d = cos(vR);
       } else if (n == -1) {
-        d = -cos(hf);
+        d = -cos(vR);
       } else {
-        d = -sin(hf);
+        d = -sin(vR);
       }
     }
     Signal[k] -= *a * d;
   }
-  emxInit_creal_T(&x, 2);
   /*  calculate the difference signal */
   /*         %% Spectral representation of the input signal */
-  fft(Signal, FftL, x);
-  x_data = x->data;
-  nx = x->size[1];
-  i = FftS->size[0] * FftS->size[1];
-  FftS->size[0] = 1;
-  FftS->size[1] = x->size[1];
-  emxEnsureCapacity_real_T(FftS, i);
-  FftS_data = FftS->data;
-  for (k = 0; k < nx; k++) {
-    FftS_data[k] = rt_hypotd_snf(x_data[k].re, x_data[k].im);
-  }
-  emxFree_creal_T(&x);
+  fft(Signal, x);
   /*  signal Fourier transform amplitude */
-  i = FftS->size[0] * FftS->size[1];
-  FftS->size[0] = 1;
-  emxEnsureCapacity_real_T(FftS, i);
-  FftS_data = FftS->data;
-  last = FftS->size[1] - 1;
-  for (i = 0; i <= last; i++) {
-    FftS_data[i] = 2.0 * FftS_data[i] / FftL;
+  for (k = 0; k < 6600000; k++) {
+    FftS[k] = 2.0 * rt_hypotd_snf(x[k].re, x[k].im) / 6.6E+6;
   }
   /*  amplitude normalization of the spectrum */
   /*         %% Tone frequency search and calculation */
-  last = FftS->size[1];
-  if (FftS->size[1] <= 2) {
-    if (FftS->size[1] == 1) {
-      ex = FftS_data[0];
-      nx = 1;
-    } else if ((FftS_data[0] < FftS_data[FftS->size[1] - 1]) ||
-               (rtIsNaN(FftS_data[0]) &&
-                (!rtIsNaN(FftS_data[FftS->size[1] - 1])))) {
-      ex = FftS_data[FftS->size[1] - 1];
-      nx = FftS->size[1];
-    } else {
-      ex = FftS_data[0];
-      nx = 1;
-    }
+  if (!rtIsNaN(FftS[0])) {
+    r1 = 1;
   } else {
-    if (!rtIsNaN(FftS_data[0])) {
-      nx = 1;
-    } else {
-      nx = 0;
-      k = 2;
-      exitg1 = false;
-      while ((!exitg1) && (k <= last)) {
-        if (!rtIsNaN(FftS_data[k - 1])) {
-          nx = k;
-          exitg1 = true;
-        } else {
-          k++;
-        }
+    r1 = 0;
+    k = 2;
+    exitg1 = false;
+    while ((!exitg1) && (k < 6600001)) {
+      if (!rtIsNaN(FftS[k - 1])) {
+        r1 = k;
+        exitg1 = true;
+      } else {
+        k++;
       }
     }
-    if (nx == 0) {
-      ex = FftS_data[0];
-      nx = 1;
-    } else {
-      ex = FftS_data[nx - 1];
-      i = nx + 1;
-      for (k = i; k <= last; k++) {
-        d = FftS_data[k - 1];
-        if (ex < d) {
-          ex = d;
-          nx = k;
-        }
+  }
+  if (r1 == 0) {
+    *Am = FftS[0];
+    r1 = 1;
+  } else {
+    *Am = FftS[r1 - 1];
+    r2 = r1 + 1;
+    for (k = r2; k < 6600001; k++) {
+      d = FftS[k - 1];
+      if (*Am < d) {
+        *Am = d;
+        r1 = k;
       }
     }
   }
   /*  maximum in the spectrum , where Am is the amplitude of the match , im is
    * the index in the array FftS starting from 1 and not from 0 */
-  *f = ((double)nx - 1.0) * Fd / FftL;
+  *f = ((double)r1 - 1.0) * 2.5E+6 / 6.6E+6;
   /*  calculating the tone frequency, im-1 because i starts at 1 and not at 0 */
   /*         %% Approximation of the residue frequency by the maximum of the
    * vector */
-  hf = 0.01;
-  ff = 0.0;
   /*  step and error optimized for speed, deviation ff reset */
-  while (fabs(hf) > 1.0E-6) {
+  fL = *f - 0.37878787878787878;
+  fR = *f + 0.37878787878787878;
+  absx = 0.0;
+  ss = 0.0;
+  /*  initial assignments to amounts */
+  for (r1 = 0; r1 < 1650001; r1++) {
+    /*  number of time array indexes Tm*Fd+1 */
+    d = (*f - 0.37878787878787878) * 360.0 * (double)r1 / 2.5E+6;
+    a_tmp = d;
+    b_cosd(&a_tmp);
+    absx += Signal[r1] * a_tmp;
+    /*  the first sum of the vector */
+    b_sind(&d);
+    ss += Signal[r1] * d;
+    /*  second vector sum */
+  }
+  vL = absx * absx + ss * ss;
+  /*  variance function - sum of squares of vector sums */
+  absx = 0.0;
+  ss = 0.0;
+  /*  initial assignments to amounts */
+  for (r1 = 0; r1 < 1650001; r1++) {
+    /*  number of time array indexes Tm*Fd+1 */
+    d = (*f + 0.37878787878787878) * 360.0 * (double)r1 / 2.5E+6;
+    a_tmp = d;
+    b_cosd(&a_tmp);
+    absx += Signal[r1] * a_tmp;
+    /*  the first sum of the vector */
+    b_sind(&d);
+    ss += Signal[r1] * d;
+    /*  second vector sum */
+  }
+  vR = absx * absx + ss * ss;
+  /*  variance function - sum of squares of vector sums */
+  while (fabs(fR - fL) > 1.0E-7) {
     /*  if the step did not reach the optimal error, then */
-    *f += hf;
-    /*  frequency is incremented by a step */
+    cc = (fR + fL) / 2.0;
     absx = 0.0;
     ss = 0.0;
     /*  initial assignments to amounts */
-    i = (int)(Tm * Fd + 1.0);
-    for (nx = 0; nx < i; nx++) {
+    for (r1 = 0; r1 < 1650001; r1++) {
       /*  number of time array indexes Tm*Fd+1 */
-      d = *f * 360.0 * (double)nx / Fd;
-      cc = d;
-      b_cosd(&cc);
-      absx += Signal[nx] * cc;
+      d = cc * 360.0 * (double)r1 / 2.5E+6;
+      a_tmp = d;
+      b_cosd(&a_tmp);
+      absx += Signal[r1] * a_tmp;
       /*  the first sum of the vector */
       b_sind(&d);
-      ss += Signal[nx] * d;
+      ss += Signal[r1] * d;
       /*  second vector sum */
     }
     absx = absx * absx + ss * ss;
     /*  variance function - sum of squares of vector sums */
-    if (absx < ff) {
+    if (vL < vR) {
       /*  if the maximum value is skipped, then */
-      hf = -hf / 2.0;
-      /*  dividing by 2 and reversing the step in the opposite direction */
+      fL = cc;
+      vL = absx;
+    } else {
+      fR = cc;
+      vR = absx;
     }
-    ff = absx;
-    /*  the past sum is equal to the current one */
   }
   /*  end of approximation in frequency */
+  *f = (fR + fL) / 2.0;
   /*         %% Calculation of the amplitude and phase of the residue by the
    * vector method, provided that the frequency is known */
-  ff = 0.0;
+  vR = 0.0;
   cc = 0.0;
   ss = 0.0;
-  yc = 0.0;
-  ys = 0.0;
+  fL = 0.0;
+  fR = 0.0;
   /*  initial assignments to amounts */
-  i = (int)(Fd * Tm + 1.0);
-  for (nx = 0; nx < i; nx++) {
+  for (r1 = 0; r1 < 1650001; r1++) {
     /*  number of time array indexes */
-    d = *f * 720.0 * (double)nx / Fd;
+    d = *f * 720.0 * (double)r1 / 2.5E+6;
     b_sind(&d);
-    ff += d / 2.0;
+    vR += d / 2.0;
     /*  simplification cos(x)*sin(x)=sin(2*x)/2 */
-    absx = *f * 360.0 * (double)nx / Fd;
-    hf = absx;
-    b_cosd(&hf);
-    cc += hf * hf;
+    absx = *f * 360.0 * (double)r1 / 2.5E+6;
+    a_tmp = absx;
+    b_cosd(&a_tmp);
+    cc += a_tmp * a_tmp;
     /*  time starts from zero, */
-    *a = absx;
-    b_sind(a);
-    ss += *a * *a;
-    /*  and the index starts from one */
-    yc += Signal[nx] * hf;
-    /*  so in sines and cosines is i */
     b_sind(&absx);
-    ys += Signal[nx] * absx;
+    ss += absx * absx;
+    /*  and the index starts from one */
+    fL += Signal[r1] * a_tmp;
+    /*  so in sines and cosines is i */
+    fR += Signal[r1] * absx;
     /*  and the signal contains the index i + 1 */
   }
   /*  end of accumulation of sums for the matrix */
   A[0] = cc;
-  A[2] = ff;
-  A[1] = ff;
+  A[2] = vR;
+  A[1] = vR;
   A[3] = ss;
   /*  solution of a system of linear equations */
   /*  assigning sums to matrix A */
-  B[0] = yc;
-  B[1] = ys;
+  B[0] = fL;
+  B[1] = fR;
   /*  assign sums to matrix B */
-  if (fabs(ff) > fabs(cc)) {
-    nx = 1;
-    last = 0;
+  if (fabs(vR) > fabs(cc)) {
+    r1 = 1;
+    r2 = 0;
   } else {
-    nx = 0;
-    last = 1;
+    r1 = 0;
+    r2 = 1;
   }
-  absx = A[last] / A[nx];
-  hf = A[nx + 2];
-  ff = (B[last] - B[nx] * absx) / (A[last + 2] - absx * hf);
-  absx = (B[nx] - ff * hf) / A[nx];
+  absx = A[r2] / A[r1];
+  vR = A[r1 + 2];
+  fL = (B[r2] - B[r1] * absx) / (A[r2 + 2] - absx * vR);
+  cc = (B[r1] - fL * vR) / A[r1];
   /*  solution vector */
-  d = 29999.0 * mz;
-  if (1.0 > d) {
-    last = 0;
-  } else {
-    last = (int)d;
+  vR = FftS[0];
+  for (k = 0; k < 1023; k++) {
+    vR += FftS[k + 1];
   }
-  d = 30005.0 * mz;
-  cc = Fd * mz / 2.0;
-  if (d > cc) {
-    i = 0;
-    nx = 0;
-  } else {
-    i = (int)d - 1;
-    nx = (int)cc;
+  for (ib = 0; ib < 773; ib++) {
+    r1 = (ib + 1) << 10;
+    absx = FftS[r1];
+    if (ib + 2 == 774) {
+      r2 = 422;
+    } else {
+      r2 = 1024;
+    }
+    for (k = 2; k <= r2; k++) {
+      absx += FftS[(r1 + k) - 1];
+    }
+    vR += absx;
   }
-  emxInit_real_T(&b_FftS, 2);
-  k = b_FftS->size[0] * b_FftS->size[1];
-  b_FftS->size[0] = 1;
-  b_FftS->size[1] = last;
-  emxEnsureCapacity_real_T(b_FftS, k);
-  b_FftS_data = b_FftS->data;
-  for (k = 0; k < last; k++) {
-    b_FftS_data[k] = FftS_data[k];
+  a_tmp = FftS[792131];
+  for (k = 0; k < 1023; k++) {
+    a_tmp += FftS[k + 792132];
   }
-  emxInit_real_T(&c_FftS, 2);
-  k = c_FftS->size[0] * c_FftS->size[1];
-  c_FftS->size[0] = 1;
-  last = nx - i;
-  c_FftS->size[1] = last;
-  emxEnsureCapacity_real_T(c_FftS, k);
-  b_FftS_data = c_FftS->data;
-  for (nx = 0; nx < last; nx++) {
-    b_FftS_data[nx] = FftS_data[i + nx];
+  for (ib = 0; ib < 32; ib++) {
+    r1 = ((ib + 1) << 10) + 792130;
+    absx = FftS[r1 + 1];
+    if (ib + 2 == 33) {
+      r2 = 100;
+    } else {
+      r2 = 1024;
+    }
+    for (k = 2; k <= r2; k++) {
+      absx += FftS[r1 + k];
+    }
+    a_tmp += absx;
   }
-  *a = (mean(b_FftS) + mean(c_FftS)) / 2.0;
+  *a = (vR / 791974.0 + a_tmp / 32868.0) / 2.0;
   /*  average noise amplitude */
-  *a = sqrt((absx * absx + ff * ff) - *a * *a);
+  *a = sqrt((cc * cc + fL * fL) - *a * *a);
   /*  subtraction signal amplitude */
-  hf = absx;
-  emxFree_real_T(&c_FftS);
-  emxFree_real_T(&b_FftS);
-  if (absx < 0.0) {
-    hf = -1.0;
-  } else if (absx > 0.0) {
-    hf = 1.0;
-  } else if (absx == 0.0) {
-    hf = 0.0;
+  vR = cc;
+  if (cc < 0.0) {
+    vR = -1.0;
+  } else if (cc > 0.0) {
+    vR = 1.0;
+  } else if (cc == 0.0) {
+    vR = 0.0;
   }
-  *p = 90.0 * (2.0 - hf) - 57.295779513082323 * atan(1.0 / (absx / ff));
+  *p = 90.0 * (2.0 - vR) - 57.295779513082323 * atan(1.0 / (cc / fL));
   /*  subtraction signal phase 0...360 */
-  *Am = ex;
 }
 
 /*

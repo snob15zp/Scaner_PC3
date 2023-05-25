@@ -2,7 +2,7 @@
 ## Makefile generated for component 'main_scanner'. 
 ## 
 ## Makefile     : main_scanner_rtw.mk
-## Generated on : Mon May 22 20:19:26 2023
+## Generated on : Wed May 24 23:19:27 2023
 ## Final product: ./main_scanner.lib
 ## Product type : static-library
 ## 
@@ -21,10 +21,10 @@
 
 PRODUCT_NAME              = main_scanner
 MAKEFILE                  = main_scanner_rtw.mk
-MATLAB_ROOT               = D:/PROGRA~1/MATLAB/R2021b
-MATLAB_BIN                = D:/PROGRA~1/MATLAB/R2021b/bin
+MATLAB_ROOT               = C:/PROGRA~1/MATLAB/R2021b1
+MATLAB_BIN                = C:/PROGRA~1/MATLAB/R2021b1/bin
 MATLAB_ARCH_BIN           = $(MATLAB_BIN)/win64
-START_DIR                 = D:/User/DROPBO~1/ZERDLA~1/Nsel/GIT/Scanner/SCANNE~1/matlab
+START_DIR                 = D:/user/DROPBO~2/ZERDLA~1/Nsel/GIT/Scanner/SCANER~3/matlab
 TGT_FCN_LIB               = ISO_C
 SOLVER_OBJ                = 
 CLASSIC_INTERFACE         = 0
@@ -183,7 +183,7 @@ DEFINES = $(DEFINES_) $(DEFINES_CUSTOM) $(DEFINES_STANDARD)
 ## SOURCE FILES
 ###########################################################################
 
-SRCS = $(START_DIR)/filesave.cpp $(START_DIR)/codegen/lib/main_scanner/main_scanner_data.c $(START_DIR)/codegen/lib/main_scanner/rt_nonfinite.c $(START_DIR)/codegen/lib/main_scanner/rtGetNaN.c $(START_DIR)/codegen/lib/main_scanner/rtGetInf.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_initialize.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_terminate.c $(START_DIR)/codegen/lib/main_scanner/main_scanner.c $(START_DIR)/codegen/lib/main_scanner/fft.c $(START_DIR)/codegen/lib/main_scanner/FFTImplementationCallback.c $(START_DIR)/codegen/lib/main_scanner/mean.c $(START_DIR)/codegen/lib/main_scanner/sprintf.c $(START_DIR)/codegen/lib/main_scanner/filesave_ceval.c $(START_DIR)/codegen/lib/main_scanner/tone_search.c $(START_DIR)/codegen/lib/main_scanner/cosd.c $(START_DIR)/codegen/lib/main_scanner/sind.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_emxutil.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_emxAPI.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_rtwutil.c
+SRCS = $(START_DIR)/filesave.cpp $(START_DIR)/codegen/lib/main_scanner/main_scanner_data.c $(START_DIR)/codegen/lib/main_scanner/rt_nonfinite.c $(START_DIR)/codegen/lib/main_scanner/rtGetNaN.c $(START_DIR)/codegen/lib/main_scanner/rtGetInf.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_initialize.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_terminate.c $(START_DIR)/codegen/lib/main_scanner/main_scanner.c $(START_DIR)/codegen/lib/main_scanner/fft.c $(START_DIR)/codegen/lib/main_scanner/FFTImplementationCallback.c $(START_DIR)/codegen/lib/main_scanner/sprintf.c $(START_DIR)/codegen/lib/main_scanner/tone_search.c $(START_DIR)/codegen/lib/main_scanner/cosd.c $(START_DIR)/codegen/lib/main_scanner/sind.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_emxutil.c $(START_DIR)/codegen/lib/main_scanner/main_scanner_rtwutil.c
 
 ALL_SRCS = $(SRCS)
 
@@ -191,7 +191,7 @@ ALL_SRCS = $(SRCS)
 ## OBJECTS
 ###########################################################################
 
-OBJS = filesave.obj main_scanner_data.obj rt_nonfinite.obj rtGetNaN.obj rtGetInf.obj main_scanner_initialize.obj main_scanner_terminate.obj main_scanner.obj fft.obj FFTImplementationCallback.obj mean.obj sprintf.obj filesave_ceval.obj tone_search.obj cosd.obj sind.obj main_scanner_emxutil.obj main_scanner_emxAPI.obj main_scanner_rtwutil.obj
+OBJS = filesave.obj main_scanner_data.obj rt_nonfinite.obj rtGetNaN.obj rtGetInf.obj main_scanner_initialize.obj main_scanner_terminate.obj main_scanner.obj fft.obj FFTImplementationCallback.obj sprintf.obj tone_search.obj cosd.obj sind.obj main_scanner_emxutil.obj main_scanner_rtwutil.obj
 
 ALL_OBJS = $(OBJS)
 
@@ -374,15 +374,7 @@ FFTImplementationCallback.obj : $(START_DIR)/codegen/lib/main_scanner/FFTImpleme
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-mean.obj : $(START_DIR)/codegen/lib/main_scanner/mean.c
-	$(CC) $(CFLAGS) -o "$@" "$<"
-
-
 sprintf.obj : $(START_DIR)/codegen/lib/main_scanner/sprintf.c
-	$(CC) $(CFLAGS) -o "$@" "$<"
-
-
-filesave_ceval.obj : $(START_DIR)/codegen/lib/main_scanner/filesave_ceval.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
@@ -399,10 +391,6 @@ sind.obj : $(START_DIR)/codegen/lib/main_scanner/sind.c
 
 
 main_scanner_emxutil.obj : $(START_DIR)/codegen/lib/main_scanner/main_scanner_emxutil.c
-	$(CC) $(CFLAGS) -o "$@" "$<"
-
-
-main_scanner_emxAPI.obj : $(START_DIR)/codegen/lib/main_scanner/main_scanner_emxAPI.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 

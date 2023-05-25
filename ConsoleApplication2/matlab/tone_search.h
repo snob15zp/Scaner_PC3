@@ -2,14 +2,13 @@
  * File: tone_search.h
  *
  * MATLAB Coder version            : 5.3
- * C/C++ source code generated on  : 22-May-2023 20:18:43
+ * C/C++ source code generated on  : 24-May-2023 23:19:00
  */
 
 #ifndef TONE_SEARCH_H
 #define TONE_SEARCH_H
 
 /* Include Files */
-#include "main_scanner_types.h"
 #include "rtwtypes.h"
 #include <stddef.h>
 #include <stdlib.h>
@@ -19,9 +18,8 @@ extern "C" {
 #endif
 
 /* Function Declarations */
-void tone_search(double Tm, double Fd, double mz, double FftL,
-                 const double T[2500001], double Signal[2500001], double *a,
-                 double *f, double *p, emxArray_real_T *FftS, double *Am);
+void tone_search(const double T[1650001], double Signal[1650001], double *a,
+                 double *f, double *p, double FftS[6600000], double *Am);
 
 #ifdef __cplusplus
 }

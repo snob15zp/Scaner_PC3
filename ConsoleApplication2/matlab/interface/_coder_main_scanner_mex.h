@@ -2,7 +2,7 @@
  * File: _coder_main_scanner_mex.h
  *
  * MATLAB Coder version            : 5.3
- * C/C++ source code generated on  : 22-May-2023 20:18:43
+ * C/C++ source code generated on  : 24-May-2023 23:19:00
  */
 
 #ifndef _CODER_MAIN_SCANNER_MEX_H
@@ -24,7 +24,7 @@ MEXFUNCTION_LINKAGE void mexFunction(int32_T nlhs, mxArray *plhs[],
 emlrtCTX mexFunctionCreateRootTLS(void);
 
 void unsafe_main_scanner_mexFunction(int32_T nlhs, mxArray *plhs[2],
-                                     int32_T nrhs, const mxArray *prhs[6]);
+                                     int32_T nrhs, const mxArray *prhs[1]);
 
 #ifdef __cplusplus
 }
