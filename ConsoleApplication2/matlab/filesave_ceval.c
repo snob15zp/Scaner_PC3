@@ -2,7 +2,7 @@
  * File: filesave_ceval.c
  *
  * MATLAB Coder version            : 5.3
- * C/C++ source code generated on  : 22-May-2023 20:18:43
+ * C/C++ source code generated on  : 25-May-2023 16:43:58
  */
 
 /* Include Files */
@@ -11,8 +11,33 @@
 #include "main_scanner_types.h"
 #include "rt_nonfinite.h"
 #include "filesave.h"
+#include <math.h>
+
+/* Function Declarations */
+static double rt_roundd_snf(double u);
 
 /* Function Definitions */
+/*
+ * Arguments    : double u
+ * Return Type  : double
+ */
+static double rt_roundd_snf(double u)
+{
+  double y;
+  if (fabs(u) < 4.503599627370496E+15) {
+    if (u >= 0.5) {
+      y = floor(u + 0.5);
+    } else if (u > -0.5) {
+      y = u * 0.0;
+    } else {
+      y = ceil(u - 0.5);
+    }
+  } else {
+    y = u;
+  }
+  return y;
+}
+
 /*
  * -----------------------------------
  * columnwise
@@ -20,24 +45,30 @@
  *
  * Arguments    : emxArray_real_T *data
  *                const emxArray_char_T *filename
+ *                const double sz[2]
  * Return Type  : void
  */
-void filesave_ceval(emxArray_real_T *data, const emxArray_char_T *filename)
+void filesave_ceval(emxArray_real_T *data, const emxArray_char_T *filename,
+                    const double sz[2])
 {
+  static const char b_cpath[] = "..\\txt\\";
   emxArray_char_T *r;
   emxArray_char_T *r2;
+  double d;
   double *data_data;
   int i;
   int loop_ub;
+  char cpath[40];
   const char *filename_data;
-  char cpath;
   char *r1;
   char *r3;
   filename_data = filename->data;
   data_data = data->data;
-  emxInit_char_T(&r);
   /* path='c:\prezerv\'; */
-  cpath = '\x00';
+  for (i = 0; i < 40; i++) {
+    cpath[i] = b_cpath[i];
+  }
+  emxInit_char_T(&r);
   /* coder.updateBuildInfo('addIncludePaths','$(START_DIR)\codegen\lib\combineXY');
    */
   /* coder.cinclude('myabsval_initialize.h'); */
@@ -69,8 +100,20 @@ void filesave_ceval(emxArray_real_T *data, const emxArray_char_T *filename)
   for (i = 0; i < loop_ub; i++) {
     r3[i] = r1[i];
   }
-  filesave(&data_data[0], 1, 2500001, &cpath, &r3[0], 1);
-  filecomp(&cpath, &r1[0]);
+  d = rt_roundd_snf(sz[1]);
+  if (d < 2.147483648E+9) {
+    if (d >= -2.147483648E+9) {
+      i = (int)d;
+    } else {
+      i = MIN_int32_T;
+    }
+  } else if (d >= 2.147483648E+9) {
+    i = MAX_int32_T;
+  } else {
+    i = 0;
+  }
+  filesave(&data_data[0], 1, i, &cpath[0], &r3[0], 1);
+  filecomp(&cpath[0], &r1[0]);
   emxFree_char_T(&r);
   emxFree_char_T(&r2);
 }

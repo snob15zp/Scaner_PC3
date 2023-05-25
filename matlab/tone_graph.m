@@ -7,7 +7,7 @@ function [ F ] = tone_graph( FftS ) % plotting function
 %     title('Signal');                % Graph caption
 %     xlabel('Second');               % Plot x-axis label
 %     ylabel('V');                    % Chart axis label
-    [SGD,T] = globalconst();
+    [SGD] = globalconst();
     %-------------------------------- Range
     figure                          % Create a new window
     F=0:SGD.Fd/SGD.FftL:SGD.Fd/2;               % Array of frequencies of the calculated spectrum

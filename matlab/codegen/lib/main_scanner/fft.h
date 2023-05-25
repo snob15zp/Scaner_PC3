@@ -1,15 +1,14 @@
 /*
- * File: mean.h
+ * File: fft.h
  *
  * MATLAB Coder version            : 5.3
- * C/C++ source code generated on  : 22-May-2023 20:18:43
+ * C/C++ source code generated on  : 25-May-2023 16:43:58
  */
 
-#ifndef MEAN_H
-#define MEAN_H
+#ifndef FFT_H
+#define FFT_H
 
 /* Include Files */
-#include "main_scanner_types.h"
 #include "rtwtypes.h"
 #include <stddef.h>
 #include <stdlib.h>
@@ -19,7 +18,7 @@ extern "C" {
 #endif
 
 /* Function Declarations */
-double mean(const emxArray_real_T *x);
+void fft(const double x[1650001], creal_T y[6600000]);
 
 #ifdef __cplusplus
 }
@@ -27,7 +26,7 @@ double mean(const emxArray_real_T *x);
 
 #endif
 /*
- * File trailer for mean.h
+ * File trailer for fft.h
  *
  * [EOF]
  */

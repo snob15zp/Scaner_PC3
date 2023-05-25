@@ -1,5 +1,8 @@
-function [ Signal, FftS, Am, a, f, p ] = tone_search( SGD, T, Signal, a, f, p ) % search and delete tones function
-    Signal=Signal-a*sind((f*360).*T+p); % calculate the difference signal
+function [ Signal, FftS, Am, a, f, p ] = tone_search( SGD, Signal, a, f, p ) % search and delete tones function
+    for i = 1:length(Signal)
+    %Signal=Signal-a*sind((f*360).*T+p); % calculate the difference signal
+    Signal(i)=Signal(i)-a*sind((f*360)*(i-1)/SGD.Fd+p);
+    end
         %% Spectral representation of the input signal
     FftS=abs(fft(Signal,SGD.FftL));     % signal Fourier transform amplitude
     FftS=2*FftS./SGD.FftL;              % amplitude normalization of the spectrum
@@ -15,13 +18,13 @@ function [ Signal, FftS, Am, a, f, p ] = tone_search( SGD, T, Signal, a, f, p ) 
 
     while abs(fR-fL)>SGD.f_err              % if the step did not reach the optimal error, then
         fX=(fR+fL)/2;
-        vX=AmpPhase(SGD, Signal, fX)
+        vX=AmpPhase(SGD, Signal, fX);
         if vL<vR                     % if the maximum value is skipped, then
             fL=fX;
             vL=vX;
         else
             fR=fX;
-            vR=vX;;
+            vR=vX;
         end
     end                             % end of approximation in frequency
     f=(fR+fL)/2;
@@ -38,7 +41,7 @@ function [ Signal, FftS, Am, a, f, p ] = tone_search( SGD, T, Signal, a, f, p ) 
        cs ss];                      % assigning sums to matrix A
     B=[yc; ys;];                    % assign sums to matrix B
     X=A\B;                          % solution vector
-    an=(mean(FftS(1:SGD.Freq_low*SGD.Fd/SGD.FftL))+mean(FftS(SGD.Freq_hi*SGD.Fd/SGD.FftL:SGD.Ffts/2)))/2; % average noise amplitude
+    an=(mean(FftS(1:round(SGD.Freq_low/SGD.Fd*SGD.FftL)))+mean(FftS(round(SGD.Freq_hi/SGD.Fd*SGD.FftL):round(SGD.Ffts/2)-1)))/2; % average noise amplitude
     a=sqrt(X(1)^2+X(2)^2-an^2);       % subtraction signal amplitude
     p=90*(2-sign(X(1)))-acotd(X(1)/X(2)); % subtraction signal phase 0...360
 end
