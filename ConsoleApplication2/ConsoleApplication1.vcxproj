@@ -22,18 +22,16 @@
     <ClCompile Include="C\filesave.cpp" />
     <ClCompile Include="C\globalconst.cpp" />
     <ClCompile Include="C\main.cpp" />
+    <ClCompile Include="C\prezerv.cpp" />
     <ClCompile Include="matlab\cosd.c" />
     <ClCompile Include="matlab\fft.c" />
     <ClCompile Include="matlab\FFTImplementationCallback.c" />
-    <ClCompile Include="matlab\filesave_ceval.c" />
     <ClCompile Include="matlab\main_scanner.c" />
     <ClCompile Include="matlab\main_scanner_data.c" />
-    <ClCompile Include="matlab\main_scanner_emxAPI.c" />
     <ClCompile Include="matlab\main_scanner_emxutil.c" />
     <ClCompile Include="matlab\main_scanner_initialize.c" />
     <ClCompile Include="matlab\main_scanner_rtwutil.c" />
     <ClCompile Include="matlab\main_scanner_terminate.c" />
-    <ClCompile Include="matlab\mean.c" />
     <ClCompile Include="matlab\rtGetInf.c" />
     <ClCompile Include="matlab\rtGetNaN.c" />
     <ClCompile Include="matlab\rt_nonfinite.c" />
@@ -42,22 +40,21 @@
     <ClCompile Include="matlab\tone_search.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="C\csv_parser.h" />
+    <ClInclude Include="C\csv_parser.hpp" />
     <ClInclude Include="C\filesave.h" />
     <ClInclude Include="C\globalconst.h" />
+    <ClInclude Include="C\prezerv.h" />
     <ClInclude Include="matlab\cosd.h" />
     <ClInclude Include="matlab\fft.h" />
     <ClInclude Include="matlab\FFTImplementationCallback.h" />
-    <ClInclude Include="matlab\filesave.h" />
-    <ClInclude Include="matlab\filesave_ceval.h" />
     <ClInclude Include="matlab\main_scanner.h" />
     <ClInclude Include="matlab\main_scanner_data.h" />
-    <ClInclude Include="matlab\main_scanner_emxAPI.h" />
     <ClInclude Include="matlab\main_scanner_emxutil.h" />
     <ClInclude Include="matlab\main_scanner_initialize.h" />
     <ClInclude Include="matlab\main_scanner_rtwutil.h" />
     <ClInclude Include="matlab\main_scanner_terminate.h" />
     <ClInclude Include="matlab\main_scanner_types.h" />
-    <ClInclude Include="matlab\mean.h" />
     <ClInclude Include="matlab\rtGetInf.h" />
     <ClInclude Include="matlab\rtGetNaN.h" />
     <ClInclude Include="matlab\rtwtypes.h" />
